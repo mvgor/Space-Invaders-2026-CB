@@ -91,8 +91,8 @@ public class Board extends JPanel {
      */
     public Board() {
 
-        initBoard();
         gameInit();
+        initBoard();
     }
 
     /**

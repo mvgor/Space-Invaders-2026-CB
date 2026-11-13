@@ -68,13 +68,13 @@ public class BoardTest {
     @Test
     public void updateBombCB1(){
         try {
-
             Board board = new Board();
             board.getAliens().clear();
+
             Method updateBombMethod = Board.class.getDeclaredMethod("update_bomb");
             updateBombMethod.setAccessible(true);
-
             updateBombMethod.invoke(board);
+
             assertEquals(0,board.getAliens().size());
 
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
@@ -88,7 +88,6 @@ public class BoardTest {
     @Test
     public void updateBombCB2(){
         try {
-
             Board board = new Board();
             List<Alien> aliens = board.getAliens();
             for (Alien alien : aliens){
@@ -110,9 +109,7 @@ public class BoardTest {
     }
 
     //Test id: UpdateBombCB3
-    //Camino: A-[B-C-D-E-F-G-J]*-FIN
-    //Cambiar int rand en update_bomb a Commons.CHANCE (5)
-    //Por cosas del código si entramos a D y no a G obligatoriamente entramos a J y pasamos por K y L
+    //A-[B-C-D-F-G-J-K-L]*-FIN
     @Test
     public void updateBombCB3(){
         try {
@@ -123,9 +120,9 @@ public class BoardTest {
 
             List<Alien> aliens = board.getAliens();
             for (Alien alien : aliens){
-                campoVisible.set(alien,true);
                 Alien.Bomb bomb = alien.getBomb();
-                bomb.setDestroyed(true);
+                bomb.setDestroyed(false);
+                bomb.setY(0);
             }
 
             Player player = board.getPlayer();
@@ -145,10 +142,8 @@ public class BoardTest {
         }
     }
 
-
     //Test id: UpdateBombCB4
-    //A-[B-C-D-F-G-H-J]*-FIN
-    //Por cosas del código si entramos a D y G, pero no a H obligatoriamente entramos a J y pasamos por K y por L
+    //A-[B-C-D-F-G-J-K-L-M]*-FIN
     @Test
     public void updateBombCB4(){
         try {
@@ -157,18 +152,66 @@ public class BoardTest {
             Field campoVisible = Sprite.class.getDeclaredField("visible");
             campoVisible.setAccessible(true);
 
+            List<Alien> aliens = board.getAliens();
+            for (Alien alien : aliens){
+                Alien.Bomb bomb = alien.getBomb();
+                bomb.setDestroyed(false);
+                bomb.setY(Commons.GROUND-Commons.BOMB_HEIGHT);
+            }
+
+            Player player = board.getPlayer();
+            campoVisible.set(player,false);
+
+            Method updateBombMethod = Board.class.getDeclaredMethod("update_bomb");
+            updateBombMethod.setAccessible(true);
+
+            updateBombMethod.invoke(board);
+
+            for (Alien alien : aliens){
+                assertTrue(alien.getBomb().isDestroyed());
+            }
+
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //Test id: UpdateBombCB5
+    //A-[B-C-D-F-G-H-J-K-L]*-FIN
+    @Test
+    public void updateBombCB5(){
+        try {
+            Board board = new Board();
+
+            Field campoVisible = Sprite.class.getDeclaredField("visible");
+            campoVisible.setAccessible(true);
+
             Player player = board.getPlayer();
             player.setX(Commons.BOARD_WIDTH/2);
-            player.setY(Commons.GROUND-10);
+            player.setY(Commons.GROUND-20);
             campoVisible.set(player,true);
 
             List<Alien> aliens = board.getAliens();
+            int i = 0;
             for (Alien alien : aliens){
                 campoVisible.set(alien,false);
                 Alien.Bomb bomb = alien.getBomb();
                 bomb.setDestroyed(false);
-                bomb.setX(player.getX()-1);
-                bomb.setY(player.getY()-1);
+                if(i == 0){
+                    bomb.setX(player.getX()-1);
+                    bomb.setY(player.getY()-1);
+                }else if(i==1){
+                    bomb.setX(player.getX()+Commons.PLAYER_WIDTH+1);
+                    bomb.setY(player.getY()-1);
+                }else if(i==2){
+                    bomb.setX(player.getX());
+                    bomb.setY(player.getY()-1);
+                }else{
+                    bomb.setX(player.getX());
+                    bomb.setY(player.getY()+Commons.PLAYER_HEIGHT+1);
+                }
+                i++;
+                if(i==4)i=0;
             }
 
             Method updateBombMethod = Board.class.getDeclaredMethod("update_bomb");
@@ -184,10 +227,10 @@ public class BoardTest {
         }
     }
 
-    //Test id: UpdateBombCB5
+    //Test id: UpdateBombCB6
     //A-[B-C-D-F-G-H-I-J]*-FIN
     @Test
-    public void updateBombCB5(){
+    public void updateBombCB6(){
         try {
             Board board = new Board();
 
@@ -220,10 +263,11 @@ public class BoardTest {
         }
     }
 
-    //Test id: UpdateBombCB6
-    //A-[B-C-D-F-G-J-K-L]*-FIN
+    //Test id: UpdateBombCB7
+    //Camino: A-[B-C-D-E-F-G-J-K-L]*-FIN
+    //Cambiar int rand en update_bomb a Commons.CHANCE (5)
     @Test
-    public void updateBombCB6(){
+    public void updateBombCB7(){
         try {
             Board board = new Board();
 
@@ -232,9 +276,9 @@ public class BoardTest {
 
             List<Alien> aliens = board.getAliens();
             for (Alien alien : aliens){
+                campoVisible.set(alien,true);
                 Alien.Bomb bomb = alien.getBomb();
-                bomb.setDestroyed(false);
-                bomb.setY(0);
+                bomb.setDestroyed(true);
             }
 
             Player player = board.getPlayer();
@@ -253,39 +297,4 @@ public class BoardTest {
             throw new RuntimeException(e);
         }
     }
-
-    //Test id: UpdateBombCB7
-    //A-[B-C-D-F-G-J-K-L-M]*-FIN
-    @Test
-    public void updateBombCB7(){
-        try {
-            Board board = new Board();
-
-            Field campoVisible = Sprite.class.getDeclaredField("visible");
-            campoVisible.setAccessible(true);
-
-            List<Alien> aliens = board.getAliens();
-            for (Alien alien : aliens){
-                Alien.Bomb bomb = alien.getBomb();
-                bomb.setDestroyed(false);
-                bomb.setY(Commons.GROUND-Commons.BOMB_HEIGHT);
-            }
-
-            Player player = board.getPlayer();
-            campoVisible.set(player,false);
-
-            Method updateBombMethod = Board.class.getDeclaredMethod("update_bomb");
-            updateBombMethod.setAccessible(true);
-
-            updateBombMethod.invoke(board);
-
-            for (Alien alien : aliens){
-                assertTrue(alien.getBomb().isDestroyed());
-            }
-
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }
