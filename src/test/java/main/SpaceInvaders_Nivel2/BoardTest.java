@@ -604,7 +604,7 @@ public class BoardTest {
 
             board.getShot().setY(5);
             board.getShot().setX(152);
-
+            campoVisible.set(board.getShot(), true);
             int muertes = board.getDeaths();
             updateShotsMethod.invoke(board);
 
