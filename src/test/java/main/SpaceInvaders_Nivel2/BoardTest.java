@@ -5,6 +5,7 @@ import main.Commons;
 import org.junit.Test;
 import space_invaders.sprites.Alien;
 import space_invaders.sprites.Player;
+import space_invaders.sprites.Shot;
 import space_invaders.sprites.Sprite;
 
 import java.lang.reflect.Field;
@@ -15,6 +16,59 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class BoardTest {
+
+    //Test id: GameInitCB1
+    //Camino: A-[B-(C-D-C)6-B]4-E
+    @Test
+    public void gameInitCB1() {
+        try{
+            Board board = new Board();
+
+            Field aliens = Board.class.getDeclaredField("aliens");
+            aliens.setAccessible(true);
+            List<Alien> listaAliens =(List<Alien>)  aliens.get(board);
+
+            Method metodo = Board.class.getDeclaredMethod("gameInit");
+            metodo.setAccessible(true);
+            metodo.invoke(board);
+
+            int k = 0;
+            for(int j = 0; j < 4; j++) {
+                for (int i = 0; i < 6; i++) {
+                    assertEquals(Commons.ALIEN_INIT_X + i * Commons.ALIEN_SEPARATOR, listaAliens.get(k).getX());
+                    assertEquals(Commons.ALIEN_INIT_Y + j * Commons.ALIEN_SEPARATOR, listaAliens.get(k).getY());
+                    k++;
+                }
+            }
+            //Prueba PLayer inicializado
+            Field valX = Sprite.class.getDeclaredField("x");
+            valX.setAccessible(true);
+            int valorX = (int) valX.get(board.getPlayer());
+
+            Field valy = Sprite.class.getDeclaredField("y");
+            valy.setAccessible(true);
+            int valorY = (int) valy.get(board.getPlayer());
+
+            int xInicial = Commons.BOARD_WIDTH / 2;
+            int yInicial = Commons.GROUND + 10;
+
+            assertEquals(xInicial, valorX);
+            assertEquals(yInicial, valorY);
+            //Prueba shot inicializado
+            Field h = Shot.class.getDeclaredField("H_SPACE");
+            h.setAccessible(true);
+
+            Field v = Shot.class.getDeclaredField("V_SPACE");
+            v.setAccessible(true);
+
+            assertEquals(valorX + (int) h.get(board.getShot()), board.getShot().getX());
+            assertEquals(valorY - (int) v.get(board.getShot()), board.getShot().getY());
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     //Test id: UpdateCB1
     //Camino: A-C-FIN
