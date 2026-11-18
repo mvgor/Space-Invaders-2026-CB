@@ -47,9 +47,8 @@ public class BombTest {
             valy.setAccessible(true);
             int valory = (int) valy.get(bomb);
 
-            assertNotNull(bomb.getImage());
-            assertEquals(outX, valorx);
-            assertEquals(outY, valory);
+            assertEquals(outX, valorx, "Bomb x should be " + outX + ". Actual x is: "+ valorx);
+            assertEquals(outY, valory,"Bomb y should be " + outY + ". Actual y is: "+ valorx);
 
         }catch(NoSuchMethodException | IllegalAccessException | InvocationTargetException | NoSuchFieldException e){
             throw new RuntimeException(e);
@@ -66,9 +65,12 @@ public class BombTest {
             method.setAccessible(true);
             method.invoke(bomb, 179,175);
 
-            assertNotNull(bomb.getImage(), "La imagen de la bomba no debe ser null");
-            assertEquals(2, bomb.getImage().getWidth(null));
-            assertEquals(6, bomb.getImage().getHeight(null));
+            int actualWidth = bomb.getImage().getWidth(null);
+            int actualHeight = bomb.getImage().getHeight(null);
+
+            assertNotNull(bomb.getImage(), "Bomb image shouldn't be null");
+            assertEquals(2,actualWidth , "Bomb image width should be " + 2 + ". Actual x is: "+ actualWidth);
+            assertEquals(6,actualHeight,"Bomb image height should be " + 6 + ". Actual x is: "+ actualHeight);
 
         }catch(NoSuchMethodException | IllegalAccessException | InvocationTargetException e){
             throw new RuntimeException(e);
