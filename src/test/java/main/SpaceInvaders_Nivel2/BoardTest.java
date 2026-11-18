@@ -625,7 +625,7 @@ public class BoardTest {
     }
 
     //Test id: updateShotsCB4
-    //Camino: A-B-C-[D-E-F]*-I-J-K-FIN
+    //Camino: A-B-C-[D-E-F-D]*-I-J-K-FIN
     @Test
     public void updateShotsCB4() {
         try {
@@ -653,7 +653,7 @@ public class BoardTest {
     }
 
     //Test id: updateShotsCB5
-    //Camino: A-B-C-[D-E-F-G]*-I-J-L-FIN
+    //Camino: A-B-C-[D-E-F-G_D]*-I-J-L-FIN
     @Test
     public void updateShotsCB5() {
         try {
@@ -672,7 +672,7 @@ public class BoardTest {
     }
 
     //Test id: UpdateShotsCB6
-    //Camino: A-B-C-[D-E-F-G]*-H-[D-E-F]*-I-J-K-FIN
+    //Camino: A-B-C-[D-E-F-G-D]*-H-[D-E-F-D]*-I-J-K-FIN
     @Test
     public void updateShotsCB6() {
         try {
