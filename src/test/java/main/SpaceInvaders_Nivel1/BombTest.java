@@ -1,6 +1,5 @@
 package main.SpaceInvaders_Nivel1;
 
-import main.Commons;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -55,6 +54,7 @@ public class BombTest {
         }
 
     }
+
     @Test
     public void specialValueTesting_initBomb() {
         try{

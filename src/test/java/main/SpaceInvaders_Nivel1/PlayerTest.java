@@ -17,9 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
 
-    //public Player() --> casos especiales (si se crea o no el objeto)
     @Test
-    public void creacionPlayer() {
+    public void specialValueTesting_Player() {
         Player player = new Player();
         assertNotNull(player, "Player should be created succesfully");
 
@@ -76,7 +75,32 @@ public class PlayerTest {
             valw.set(player,Commons.PLAYER_WIDTH);
 
             player.act();
-            assertEquals(output,player.getX());
+            assertEquals(output,player.getX(),"Player x should be " + output + ". Actual x is: "+ player.getX());
+
+        }catch (NoSuchFieldException | IllegalAccessException e ) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "WeakNormalEquivalenceClassAndNormalBoundaryValueTestingActPlayer.csv", numLinesToSkip = 1)
+    public void weakNormalEquivalenceClassAndNormalBoundaryValueTesting_act(int x, int dx, int output) {
+        try{
+            Player player = new Player();
+            player.setX(x);
+
+            Field valdx = Sprite.class.getDeclaredField("dx");
+            valdx.setAccessible(true);
+            valdx.set(player,dx);
+
+            //El JAR da problemas para establecer width así que le asignamos
+            //manualmente el valor Commons.PLAYER_WIDTH
+            Field valw = Player.class.getDeclaredField("width");
+            valw.setAccessible(true);
+            valw.set(player,Commons.PLAYER_WIDTH);
+
+            player.act();
+            assertEquals(output,player.getX(),"Player x should be " + output + ". Actual x is: "+ player.getX());
 
         }catch (NoSuchFieldException | IllegalAccessException e ) {
             throw new RuntimeException(e);
