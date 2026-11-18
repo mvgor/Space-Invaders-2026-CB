@@ -1,5 +1,6 @@
 package main.SpaceInvaders_Nivel1;
 
+import main.Commons;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -55,4 +56,22 @@ public class BombTest {
         }
 
     }
+    @Test
+    public void specialValueTesting_initBomb() {
+        try{
+            Alien alien = new Alien(0,0);
+            Alien.Bomb bomb = alien.new Bomb(0,0);
+
+            Method method = Alien.Bomb.class.getDeclaredMethod("initBomb", int.class, int.class);
+            method.setAccessible(true);
+            method.invoke(bomb, 179,175);
+
+            assertNotNull(bomb.getImage(), "La imagen de la bomba no debe ser null");
+            assertEquals(2, bomb.getImage().getWidth(null));
+            assertEquals(6, bomb.getImage().getHeight(null));
+
+        }catch(NoSuchMethodException | IllegalAccessException | InvocationTargetException e){
+            throw new RuntimeException(e);
+        }
+ }
 }
