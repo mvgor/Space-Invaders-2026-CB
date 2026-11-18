@@ -672,7 +672,7 @@ public class BoardTest {
     }
 
     //Test id: UpdateShotsCB6
-    //Camino: A-B-C-[D-E-F-G-D]*-H-[D-E-F-D]*-I-J-K-FIN
+    //Camino: A-B-C-[D-E-F-G]*-H-[D-E-F-D]*-I-J-K-FIN
     @Test
     public void updateShotsCB6() {
         try {
