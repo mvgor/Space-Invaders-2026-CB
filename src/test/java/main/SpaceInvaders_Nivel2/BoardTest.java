@@ -118,7 +118,7 @@ public class BoardTest {
     }
 
     //Test id: UpdateAlienCB1
-    //Camino: A - B - L - M
+    //Camino: A - B - L - M - FIN
     @Test
     public void update_aliensCB1() {
         try {
@@ -143,7 +143,7 @@ public class BoardTest {
     }
 
     //Test id:UpdateAlienCB2
-    //Camino: A - B - C - D - [H - B - L - M]
+    //Camino: A - [B - C - D - H - B]* - L - M - FIN
     @Test
     public void update_aliensCB2() {
         try {
@@ -160,7 +160,7 @@ public class BoardTest {
             List<Alien> aliens = (List<Alien>) aliensField.get(board);
             aliens.clear();
 
-            // Alien en posición central (D=falso, H=falso) y no visible (O=falso)
+
             Alien alien = new Alien(100, 100);
             campoVisible.set(alien, false);
 
@@ -179,10 +179,11 @@ public class BoardTest {
         }
     }
 
-    //Test id: UpdateAlienCB6
-    //Camino: A - B - C - D - H - I - J - K - J - B - L - M
+
+    //Test id: UpdateAlienCB3
+    //Camino: A - [B - C - D - H - I - [J - K - J]* - B]* - L - M - FIN
     @Test
-    public void update_aliensCB6() {
+    public void update_aliensCB3() {
         try {
             Board board = new Board();
             Method updateAliensMethod = Board.class.getDeclaredMethod("update_aliens");
@@ -205,7 +206,7 @@ public class BoardTest {
             Field directionField = Board.class.getDeclaredField("direction");
             directionField.setAccessible(true);
             directionField.setInt(board, -1);
-            updateAliensMethod.invoke(board); // Dirección cambia a 1 y el alien baja en K (y + GO\_DOWN)
+            updateAliensMethod.invoke(board);
             assertEquals(1, directionField.getInt(board));
             assertEquals(50 + Commons.GO_DOWN, alien1.getY());
         } catch (Exception e) {
@@ -213,8 +214,115 @@ public class BoardTest {
         }
     }
 
+    //Test id: UpdateAlienCB4
+    //Camino: A - [B - C - D - E - [F - G - F]* - H - I - [J - K - J]* - B]* - L - M - FIN
+    @Test
+    public void update_aliensCB4() {
+        try {
+            Board board = new Board();
+            Method updateAliensMethod = Board.class.getDeclaredMethod("update_aliens");
+            updateAliensMethod.setAccessible(true);
+
+            Field aliensField = Board.class.getDeclaredField("aliens");
+            aliensField.setAccessible(true);
+
+            Field campoVisible = Sprite.class.getDeclaredField("visible");
+            campoVisible.setAccessible(true);
+
+            List<Alien> aliens = (List<Alien>) aliensField.get(board);
+            aliens.clear();
+
+            int xDerecha = Commons.BOARD_WIDTH - Commons.BORDER_RIGHT;
+            Alien alien = new Alien(xDerecha, 100);
+            campoVisible.set(alien, false);
+            aliens.add(alien);
+
+            Field directionField = Board.class.getDeclaredField("direction");
+            directionField.setAccessible(true);
+            directionField.setInt(board, 1);
+
+            updateAliensMethod.invoke(board);
+
+
+            assertEquals(1, directionField.getInt(board));
+            assertEquals(100 + 2 * Commons.GO_DOWN, alien.getY());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    //Test id: UpdateAlienCB5
+    //Camino: A - B - L - [M - N - O - M]* - FIN
+    @Test
+    public void update_aliensCB5() {
+        try {
+            Board board = new Board();
+            Method updateAliensMethod = Board.class.getDeclaredMethod("update_aliens");
+            updateAliensMethod.setAccessible(true);
+
+            Field aliensField = Board.class.getDeclaredField("aliens");
+            aliensField.setAccessible(true);
+
+            Field campoVisible = Sprite.class.getDeclaredField("visible");
+            campoVisible.setAccessible(true);
+
+            List<Alien> aliens = (List<Alien>) aliensField.get(board);
+            aliens.clear();
+
+            Alien alien = new Alien(150, 150);
+            campoVisible.set(alien, false);
+            aliens.add(alien);
+
+            Field directionField = Board.class.getDeclaredField("direction");
+            directionField.setAccessible(true);
+            directionField.setInt(board, 1);
+            int xInicial = alien.getX();
+            updateAliensMethod.invoke(board);
+
+            assertEquals(xInicial, alien.getX());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //Test id: UpdateAlienCB6
+    //Camino: A - B - L - [M - N - O - P - Q - S - M]* - FIN
+    @Test
+    public void update_aliensCB6() {
+        try {
+            Board board = new Board();
+            Method updateAliensMethod = Board.class.getDeclaredMethod("update_aliens");
+            updateAliensMethod.setAccessible(true);
+
+            Field aliensField = Board.class.getDeclaredField("aliens");
+            aliensField.setAccessible(true);
+
+            Field campoVisible = Sprite.class.getDeclaredField("visible");
+            campoVisible.setAccessible(true);
+
+            List<Alien> aliens = (List<Alien>) aliensField.get(board);
+            aliens.clear();
+
+
+            int ySegura = Commons.GROUND - Commons.ALIEN_HEIGHT - 10;
+            Alien alien = new Alien(150, ySegura);
+            campoVisible.set(alien, true);
+            aliens.add(alien);
+
+            Field directionField = Board.class.getDeclaredField("direction");
+            directionField.setAccessible(true);
+            directionField.setInt(board, 1);
+            updateAliensMethod.invoke(board);
+
+            assertTrue(board.isInGame());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //Test id: UpdateAlienCB7
-    //Camino: A - B - L - M - N - O - M
+    //Camino: A - B - L - [M - N - O - P - Q - R - S - M]* - FIN
     @Test
     public void update_aliensCB7() {
         try {
@@ -231,76 +339,7 @@ public class BoardTest {
             List<Alien> aliens = (List<Alien>) aliensField.get(board);
             aliens.clear();
 
-            Alien alien = new Alien(150, 150);
-            campoVisible.set(alien, false); // O evalúa falso
-            aliens.add(alien);
 
-            Field directionField = Board.class.getDeclaredField("direction");
-            directionField.setAccessible(true);
-            directionField.setInt(board, 1);
-            int xInicial = alien.getX();
-            updateAliensMethod.invoke(board);
-            // Al no estar visible, el alien no se desplaza
-            assertEquals(xInicial, alien.getX());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    //Test id: UpdateAlienCB8
-    //Camino: A - B - L - M - N - O - P - Q - S - M
-    @Test
-    public void update_aliensCB8() {
-        try {
-            Board board = new Board();
-            Method updateAliensMethod = Board.class.getDeclaredMethod("update_aliens");
-            updateAliensMethod.setAccessible(true);
-
-            Field aliensField = Board.class.getDeclaredField("aliens");
-            aliensField.setAccessible(true);
-
-            Field campoVisible = Sprite.class.getDeclaredField("visible");
-            campoVisible.setAccessible(true);
-
-            List<Alien> aliens = (List<Alien>) aliensField.get(board);
-            aliens.clear();
-
-            // Posición Y por encima de la zona de invasión (Q evalúa falso)
-            int ySegura = Commons.GROUND - Commons.ALIEN_HEIGHT - 10;
-            Alien alien = new Alien(150, ySegura);
-            campoVisible.set(alien, true); // O evalúa verdadero
-            aliens.add(alien);
-
-            Field directionField = Board.class.getDeclaredField("direction");
-            directionField.setAccessible(true);
-            directionField.setInt(board, 1);
-            updateAliensMethod.invoke(board);
-            // El juego continúa activo (no se entra en R)
-            assertTrue(board.isInGame());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    //Test id: UpdateAlienCB9
-    //Camino: A - B - L - M - N - O - P - Q - R - S - M
-    @Test
-    public void update_aliensCB9() {
-        try {
-            Board board = new Board();
-            Method updateAliensMethod = Board.class.getDeclaredMethod("update_aliens");
-            updateAliensMethod.setAccessible(true);
-
-            Field aliensField = Board.class.getDeclaredField("aliens");
-            aliensField.setAccessible(true);
-
-            Field campoVisible = Sprite.class.getDeclaredField("visible");
-            campoVisible.setAccessible(true);
-
-            List<Alien> aliens = (List<Alien>) aliensField.get(board);
-            aliens.clear();
-
-            // Posición Y que supera la línea del suelo (Q evalúa verdadero)
             int yInvasion = Commons.GROUND * Commons.ALIEN_HEIGHT + 5;
             Alien alien = new Alien(150, yInvasion);
             campoVisible.set(alien, true);
@@ -310,7 +349,7 @@ public class BoardTest {
             directionField.setAccessible(true);
             directionField.setInt(board, 1);
             updateAliensMethod.invoke(board);
-            // Se ejecuta R: inGame se vuelve false y se asigna el mensaje "Invasion!"
+
             assertFalse(board.isInGame());
             assertEquals("Invasion!", board.getMessage());
         } catch (Exception e) {
