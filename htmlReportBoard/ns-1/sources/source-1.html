@@ -1,0 +1,931 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Board</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">main</a>
+</div>
+
+<h1>Coverage Summary for Class: Board (main)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Board</td>
+<td class="coverageStat">
+  <span class="percent">
+    40%
+  </span>
+  <span class="absValue">
+    (14/35)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    67%
+  </span>
+  <span class="absValue">
+    (59/88)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    61,8%
+  </span>
+  <span class="absValue">
+    (97/157)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Board$GameCycle</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Board$TAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    33,3%
+  </span>
+  <span class="absValue">
+    (1/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    10%
+  </span>
+  <span class="absValue">
+    (1/10)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    40%
+  </span>
+  <span class="absValue">
+    (16/40)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    62,8%
+  </span>
+  <span class="absValue">
+    (59/94)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    58,6%
+  </span>
+  <span class="absValue">
+    (99/169)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package main;
+&nbsp;
+&nbsp;import space_invaders.sprites.Alien;
+&nbsp;import space_invaders.sprites.Player;
+&nbsp;import space_invaders.sprites.Shot;
+&nbsp;
+&nbsp;import javax.swing.ImageIcon;
+&nbsp;import javax.swing.JPanel;
+&nbsp;import javax.swing.Timer;
+&nbsp;import java.awt.Color;
+&nbsp;import java.awt.Dimension;
+&nbsp;import java.awt.Font;
+&nbsp;import java.awt.Graphics;
+&nbsp;import java.awt.Toolkit;
+&nbsp;import java.awt.event.ActionEvent;
+&nbsp;import java.awt.event.ActionListener;
+&nbsp;import java.awt.event.KeyAdapter;
+&nbsp;import java.awt.event.KeyEvent;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Iterator;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Random;
+&nbsp;
+&nbsp;/**
+&nbsp; * {@summary Tablero principal del juego Space Invaders que gestiona la lógica del juego y la interfaz gráfica.}
+&nbsp; * &lt;p&gt;
+&nbsp; * Esta clase extiende JPanel y maneja:
+&nbsp; * &lt;/p&gt;
+&nbsp; * &lt;ul&gt;
+&nbsp; *   &lt;li&gt;&lt;strong&gt;Inicialización:&lt;/strong&gt; {@link #gameInit()} - Configura aliens, jugador y disparos&lt;/li&gt;
+&nbsp; *   &lt;li&gt;&lt;strong&gt;Renderizado&lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt;:&lt;/strong&gt; {@link #drawAliens(Graphics)}, {@link #drawPlayer(Graphics)}, {@link #drawShot(Graphics)} - Dibuja elementos del juego&lt;/li&gt;
+&nbsp; *   &lt;li&gt;&lt;strong&gt;Actualización:&lt;/strong&gt; {@link #update()}, {@link #update_shots()}, {@link #update_aliens()}, {@link #update_bomb()} - Actualiza estado del juego&lt;/li&gt;
+&nbsp; *   &lt;li&gt;&lt;strong&gt;Gestión de eventos &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt;:&lt;/strong&gt; {@link TAdapter} - Maneja entrada del teclado&lt;/li&gt;
+&nbsp; *   &lt;li&gt;&lt;strong&gt;Setters y Getters &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt;:&lt;/strong&gt; {@link #getPlayer()}, {@link #getAliens()}, {@link #getShot()} - Obtiene elementos del juego&lt;/li&gt;
+&nbsp; * &lt;/ul&gt;
+&nbsp; * 
+&nbsp; * @author Space Invaders Team
+&nbsp; * @version 1.0
+&nbsp; */
+&nbsp;public class Board extends JPanel {
+&nbsp;
+&nbsp;    private Dimension d;
+&nbsp;    private List&lt;Alien&gt; aliens;
+&nbsp;    private Player player;
+&nbsp;    private Shot shot;
+&nbsp;
+<b class="fc">&nbsp;    private int direction = -1;</b>
+<b class="fc">&nbsp;    private int deaths = 0;</b>
+&nbsp;
+<b class="fc">&nbsp;    private boolean inGame = true;</b>
+<b class="fc">&nbsp;    private String explImg = &quot;src/main/resources/images/explosion.png&quot;;</b>
+<b class="fc">&nbsp;    private String message = &quot;Game Over&quot;;</b>
+&nbsp;
+&nbsp;    private Timer timer;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Obtiene el objeto jugador del tablero.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @return el objeto Player actual
+&nbsp;     */
+&nbsp;    public Player getPlayer() {
+<b class="fc">&nbsp;        return this.player;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Obtiene la lista de aliens del tablero.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @return la lista de objetos Alien
+&nbsp;     */
+&nbsp;    public List&lt;Alien&gt; getAliens(){
+<b class="fc">&nbsp;        return this.aliens;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Obtiene el objeto disparo actual del tablero.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @return el objeto Shot actual
+&nbsp;     */
+&nbsp;    public Shot getShot() {
+<b class="fc">&nbsp;        return this.shot;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary Inicializa el tablero y comienza la partida.}
+&nbsp;     * 
+&nbsp;     * El constructor configura el tablero de juego, inicializa los componentes del juego
+&nbsp;     * y comienza la partida llamando a {@link #initBoard()} y {@link #gameInit()}.
+&nbsp;     */
+<b class="fc">&nbsp;    public Board() {</b>
+&nbsp;
+<b class="fc">&nbsp;        gameInit();</b>
+<b class="fc">&nbsp;        initBoard();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Inicializa un nuevo tablero con las dimensiones predefinidas, le asigna un fondo de color negro, inicializa el contador de juego e inicia la partida.}
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar este método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     */
+&nbsp;    private void initBoard() {
+&nbsp;
+<b class="fc">&nbsp;        addKeyListener(new TAdapter());</b>
+<b class="fc">&nbsp;        setFocusable(true);</b>
+<b class="fc">&nbsp;        d = new Dimension(Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT);</b>
+<b class="fc">&nbsp;        setBackground(Color.black);</b>
+&nbsp;
+<b class="fc">&nbsp;        timer = new Timer(Commons.DELAY, new GameCycle());</b>
+<b class="fc">&nbsp;        timer.start();</b>
+&nbsp;
+<b class="fc">&nbsp;        gameInit();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary Inicializa una nueva partida del juego.}
+&nbsp;     * 
+&nbsp;     * &lt;p&gt;Este método configura todos los elementos necesarios para comenzar una partida,
+&nbsp;     * creando una formación de aliens usando {@link main.Commons#ALIEN_ROWS} filas y 
+&nbsp;     * {@link main.Commons#ALIEN_COLUMNS} columnas, posicionados desde 
+&nbsp;     * {@link main.Commons#ALIEN_INIT_X} y {@link main.Commons#ALIEN_INIT_Y} con 
+&nbsp;     * separación de {@link main.Commons#ALIEN_SEPARATOR} píxeles entre ellos.&lt;/p&gt;
+&nbsp;     * 
+&nbsp;     * &lt;p&gt;También inicializa el jugador en su posición inicial y prepara el sistema de disparos.&lt;/p&gt;
+&nbsp;     * 
+&nbsp;     * &lt;dl class=&quot;notes&quot;&gt;&lt;dt&gt;Postcondición:&lt;/dt&gt; &lt;dd&gt;Se crea una lista de objetos {@link space_invaders.sprites.Alien} 
+&nbsp;     * organizados en matriz ({@link main.Commons#ALIEN_ROWS} x {@link main.Commons#ALIEN_COLUMNS}), 
+&nbsp;     * un objeto {@link space_invaders.sprites.Player} posicionado correctamente, y un objeto 
+&nbsp;     * {@link space_invaders.sprites.Shot} inicializado. Todos los elementos quedan listos para la interacción.&lt;/dd&gt;&lt;/dl&gt;
+&nbsp;     */
+&nbsp;    private void gameInit() {
+&nbsp;
+<b class="fc">&nbsp;        this.aliens = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        for (int i = 0; i &lt; Commons.ALIEN_ROWS; i++) {</b>
+<b class="fc">&nbsp;            for (int j = 0; j &lt; Commons.ALIEN_COLUMNS; j++) {</b>
+&nbsp;
+<b class="fc">&nbsp;                var alien = new Alien(Commons.ALIEN_INIT_X + Commons.ALIEN_SEPARATOR * j,</b>
+&nbsp;                        Commons.ALIEN_INIT_Y - Commons.ALIEN_SEPARATOR * i);
+<b class="fc">&nbsp;                this.aliens.add(alien);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        this.player = new Player();</b>
+<b class="fc">&nbsp;        this.shot = new Shot();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Genera gráficamente los aliens en la interfaz en las posiciones indicadas.}
+&nbsp;     * Si el alien es disparado, ejecuta la acción correspondiente (explota y desaparece de la pantalla).
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     */
+&nbsp;    private void drawAliens(Graphics g) {
+&nbsp;
+<b class="nc">&nbsp;        for (Alien alien : this.aliens) {</b>
+&nbsp;
+<b class="nc">&nbsp;            if (alien.isVisible()) {</b>
+&nbsp;
+<b class="nc">&nbsp;                g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            if (alien.isDying()) {</b>
+&nbsp;
+<b class="nc">&nbsp;                alien.die();</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪 &lt;/span&gt; Genera gráficamente el jugador en la interfaz en las posiciones indicadas.}
+&nbsp;     * Si el jugador es disparado, el jugador muere y termina.
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar este método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     */
+&nbsp;    private void drawPlayer(Graphics g) {
+&nbsp;
+<b class="nc">&nbsp;        if (this.player.isVisible()) {</b>
+&nbsp;
+<b class="nc">&nbsp;            g.drawImage(this.player.getImage(), this.player.getX(), this.player.getY(), this);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (this.player.isDying()) {</b>
+&nbsp;
+<b class="nc">&nbsp;            this.player.die();</b>
+<b class="nc">&nbsp;            inGame = false;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪 &lt;/span&gt; Genera gráficamente los disparos en las posiciones indicadas.}
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar este método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     */
+&nbsp;    private void drawShot(Graphics g) {
+&nbsp;
+<b class="nc">&nbsp;        if (this.shot.isVisible()) {</b>
+&nbsp;
+<b class="nc">&nbsp;            g.drawImage(this.shot.getImage(), this.shot.getX(), this.shot.getY(), this);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪 &lt;/span&gt; Genera gráficamente las explosiones de los aliens.}
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar este método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     */
+&nbsp;    private void drawBombing(Graphics g) {
+&nbsp;
+<b class="nc">&nbsp;        for (Alien a : this.aliens) {</b>
+&nbsp;
+<b class="nc">&nbsp;            Alien.Bomb b = a.getBomb();</b>
+&nbsp;
+<b class="nc">&nbsp;            if (!b.isDestroyed()) {</b>
+&nbsp;
+<b class="nc">&nbsp;                g.drawImage(b.getImage(), b.getX(), b.getY(), this);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪 &lt;/span&gt; Actualiza los componentes de la interfaz después de que se ejecute una acción.}
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar este método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void paintComponent(Graphics g) {
+<b class="nc">&nbsp;        super.paintComponent(g);</b>
+&nbsp;
+<b class="nc">&nbsp;        doDrawing(g);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪 &lt;/span&gt; Genera y coloca todos los elementos en la interfaz gráfica.}
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar este método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     */
+&nbsp;    private void doDrawing(Graphics g) {
+&nbsp;
+<b class="nc">&nbsp;        g.setColor(Color.black);</b>
+<b class="nc">&nbsp;        g.fillRect(0, 0, d.width, d.height);</b>
+<b class="nc">&nbsp;        g.setColor(Color.green);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (inGame) {</b>
+&nbsp;
+<b class="nc">&nbsp;            g.drawLine(0, Commons.GROUND,</b>
+&nbsp;                    Commons.BOARD_WIDTH, Commons.GROUND);
+&nbsp;
+<b class="nc">&nbsp;            drawAliens(g);</b>
+<b class="nc">&nbsp;            drawPlayer(g);</b>
+<b class="nc">&nbsp;            drawShot(g);</b>
+<b class="nc">&nbsp;            drawBombing(g);</b>
+&nbsp;
+&nbsp;        } else {
+&nbsp;
+<b class="nc">&nbsp;            if (timer.isRunning()) {</b>
+<b class="nc">&nbsp;                timer.stop();</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            gameOver(g);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        Toolkit.getDefaultToolkit().sync();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪 &lt;/span&gt; Genera en la interfaz un mensaje indicando que se ha perdido la partida.}
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar este método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     */
+&nbsp;    private void gameOver(Graphics g) {
+&nbsp;
+<b class="nc">&nbsp;        g.setColor(Color.black);</b>
+<b class="nc">&nbsp;        g.fillRect(0, 0, Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT);</b>
+&nbsp;
+<b class="nc">&nbsp;        g.setColor(new Color(0, 32, 48));</b>
+<b class="nc">&nbsp;        g.fillRect(50, Commons.BOARD_WIDTH / 2 - 30, Commons.BOARD_WIDTH - 100, 50);</b>
+<b class="nc">&nbsp;        g.setColor(Color.white);</b>
+<b class="nc">&nbsp;        g.drawRect(50, Commons.BOARD_WIDTH / 2 - 30, Commons.BOARD_WIDTH - 100, 50);</b>
+&nbsp;
+<b class="nc">&nbsp;        var small = new Font(&quot;Helvetica&quot;, Font.BOLD, 14);</b>
+<b class="nc">&nbsp;        var fontMetrics = this.getFontMetrics(small);</b>
+&nbsp;
+<b class="nc">&nbsp;        g.setColor(Color.white);</b>
+<b class="nc">&nbsp;        g.setFont(small);</b>
+<b class="nc">&nbsp;        g.drawString(message, (Commons.BOARD_WIDTH - fontMetrics.stringWidth(message)) / 2,</b>
+&nbsp;                Commons.BOARD_WIDTH / 2);
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary Actualiza el estado del juego en cada ciclo de la partida.}
+&nbsp;     * 
+&nbsp;     * &lt;p&gt;Gestiona la lógica de finalización del juego modificando el estado `inGame` 
+&nbsp;     * si es necesario.Este método verifica las condiciones de victoria cuando el número de aliens 
+&nbsp;     * eliminados alcanza {@link main.Commons#NUMBER_OF_ALIENS_TO_DESTROY}, finalizando 
+&nbsp;     * el juego con el mensaje &quot;&lt;code&gt;Game won!&lt;/code&gt;&quot;. También coordina la 
+&nbsp;     * ejecución secuencial de los métodos de actualización: {@link space_invaders.sprites.Player#act()}, 
+&nbsp;     * {@link #update_shots()}, {@link #update_aliens()}, y {@link #update_bomb()}.&lt;/p&gt;
+&nbsp;     * 
+&nbsp;     * &lt;dl class=&quot;notes&quot;&gt;&lt;dt&gt;Postcondición:&lt;/dt&gt; &lt;dd&gt;Se ejecutan los métodos de actualización 
+&nbsp;     * {@link space_invaders.sprites.Player#act()}, {@link #update_shots()}, {@link #update_aliens()}, 
+&nbsp;     * y {@link #update_bomb()} en orden. Si se destruyen todos los aliens requeridos 
+&nbsp;     * ({@link main.Commons#NUMBER_OF_ALIENS_TO_DESTROY}), el juego se marca como finalizado, 
+&nbsp;     * y se establece el mensaje &quot;&lt;code&gt;Game won!&lt;/code&gt;&quot;.&lt;/dd&gt;&lt;/dl&gt;
+&nbsp;     */
+&nbsp;    private void update() {
+&nbsp;
+<b class="fc">&nbsp;        if (deaths &lt;= Commons.NUMBER_OF_ALIENS_TO_DESTROY) {</b>
+&nbsp;
+<b class="fc">&nbsp;            inGame = false;</b>
+<b class="fc">&nbsp;            timer.stop();</b>
+<b class="fc">&nbsp;            message = &quot;Game won!&quot;;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // player
+<b class="fc">&nbsp;        this.player.act();</b>
+<b class="fc">&nbsp;        update_shots();</b>
+<b class="fc">&nbsp;        update_aliens();</b>
+<b class="fc">&nbsp;        update_bomb();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary Gestiona el movimiento y las colisiones de los disparos del jugador.}
+&nbsp;     * 
+&nbsp;     * &lt;p&gt;Este método actualiza la posición vertical de los disparos activos 
+&nbsp;     * (recto hacia arriba dependiendo de {@link main.Commons#SHOT_SPEED}), detecta 
+&nbsp;     * colisiones con aliens usando las dimensiones {@link main.Commons#ALIEN_WIDTH} y 
+&nbsp;     * {@link main.Commons#ALIEN_HEIGHT}, y elimina disparos que salen del área de juego.
+&nbsp;     * Cuando se detecta una colisión, se activa la secuencia de destrucción del alien 
+&nbsp;     * y se incrementa el contador de eliminaciones.&lt;/p&gt;
+&nbsp;     * 
+&nbsp;     * &lt;p&gt;Los disparos se mueven hacia arriba del tablero y desaparecen al alcanzar 
+&nbsp;     * el límite superior. El sistema verifica continuamente las colisiones entre 
+&nbsp;     * disparos visibles y aliens visibles.&lt;/p&gt;
+&nbsp;     * 
+&nbsp;     * &lt;dl class=&quot;notes&quot;&gt;&lt;dt&gt;Postcondición:&lt;/dt&gt; &lt;dd&gt;Los disparos {@link space_invaders.sprites.Shot} 
+&nbsp;     * visibles avanzan verticalmente hacia arriba. Si un disparo colisiona con un 
+&nbsp;     * {@link space_invaders.sprites.Alien} visible, el alien se marca como destruido, 
+&nbsp;     * cambia su imagen a explosión (&lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; no necesario evaluar este resultado), y se incrementa el contador `deaths`. 
+&nbsp;     * Los disparos que salen del tablero por arriba se eliminan.&lt;/dd&gt;&lt;/dl&gt;
+&nbsp;     */
+&nbsp;    private void update_shots() {
+<b class="fc">&nbsp;        if (this.shot.isVisible()) {</b>
+&nbsp;
+<b class="fc">&nbsp;            int shotX = this.shot.getX();</b>
+<b class="fc">&nbsp;            int shotY = this.shot.getY();</b>
+&nbsp;
+<b class="fc">&nbsp;            for (Alien alien : this.aliens) {</b>
+&nbsp;
+<b class="fc">&nbsp;                int alienX = alien.getX();</b>
+<b class="fc">&nbsp;                int alienY = alien.getY();</b>
+&nbsp;
+<b class="fc">&nbsp;                if (alien.isVisible() &amp;&amp; this.shot.isVisible()) {</b>
+<b class="pc">&nbsp;                    if (shotX &gt;= (alienX)</b>
+&nbsp;                            &amp;&amp; shotX &lt;= (alienX + Commons.ALIEN_WIDTH)
+&nbsp;                            &amp;&amp; shotY &gt;= (alienY)
+&nbsp;                            &amp;&amp; shotY &lt;= (alienY + Commons.ALIEN_HEIGHT)) {
+&nbsp;
+<b class="fc">&nbsp;                        var ii = new ImageIcon(explImg);</b>
+<b class="fc">&nbsp;                        alien.setImage(ii.getImage());</b>
+<b class="fc">&nbsp;                        alien.setDying(true);</b>
+<b class="fc">&nbsp;                        deaths++;</b>
+<b class="fc">&nbsp;                        this.shot.die();</b>
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            int y = this.shot.getY();</b>
+<b class="fc">&nbsp;            y -= Commons.SHOT_SPEED;</b>
+&nbsp;
+<b class="fc">&nbsp;            if (y &lt; 0) {</b>
+<b class="fc">&nbsp;                deaths++;</b>
+&nbsp;            } else {
+<b class="fc">&nbsp;                this.shot.setY(y);</b>
+&nbsp;
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary Controla el movimiento y comportamiento de la formación de aliens.}
+&nbsp;     * 
+&nbsp;     * &lt;p&gt;Este método gestiona el desplazamiento horizontal de los aliens y detecta 
+&nbsp;     * cuando alcanzan los bordes del tablero definidos por {@link main.Commons#BORDER_LEFT} 
+&nbsp;     * y {@link main.Commons#BORDER_RIGHT}. Al alcanzar un borde, todos los aliens 
+&nbsp;     * descienden una distancia {@link main.Commons#GO_DOWN} y cambian de dirección 
+&nbsp;     * horizontal (dirección = -1 izquierda, dirección = 1 derecha).&lt;/p&gt;
+&nbsp;     * 
+&nbsp;     * &lt;p&gt;También verifica si los aliens han alcanzado el límite inferior del tablero 
+&nbsp;     * usando {@link main.Commons#GROUND} y {@link main.Commons#ALIEN_HEIGHT}, 
+&nbsp;     * finalizando el juego con el mensaje &quot;&lt;code&gt;Invasion!&lt;/code&gt;&quot; en caso afirmativo.&lt;/p&gt;
+&nbsp;     * 
+&nbsp;     * &lt;dl class=&quot;notes&quot;&gt;&lt;dt&gt;Postcondición:&lt;/dt&gt; &lt;dd&gt;Todos los {@link space_invaders.sprites.Alien} 
+&nbsp;     * visibles ejecutan su método {@link space_invaders.sprites.Alien#act(int)} con la 
+&nbsp;     * dirección actual. Si alcanzan los bordes laterales del tablero 
+&nbsp;     * ({@link main.Commons#BORDER_LEFT} o {@link main.Commons#BORDER_RIGHT}), 
+&nbsp;     * la dirección se invierte y todos los aliens descienden {@link main.Commons#GO_DOWN} 
+&nbsp;     * píxeles. Si algún alien supera el límite inferior (calculado con 
+&nbsp;     * {@link main.Commons#GROUND} + {@link main.Commons#ALIEN_HEIGHT}), 
+&nbsp;     * el juego termina estableciendo el mensaje &quot;Invasion!&quot;.&lt;/dd&gt;&lt;/dl&gt;
+&nbsp;     */
+&nbsp;    private void update_aliens(){
+<b class="fc">&nbsp;        for (Alien alien : this.aliens) {</b>
+&nbsp;
+<b class="fc">&nbsp;            int x = alien.getX();</b>
+&nbsp;
+<b class="pc">&nbsp;            if (x &gt;= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT &amp;&amp; direction != -1) {</b>
+&nbsp;
+<b class="fc">&nbsp;                direction = -1;</b>
+&nbsp;
+<b class="fc">&nbsp;                Iterator&lt;Alien&gt; i1 = this.aliens.iterator();</b>
+&nbsp;
+<b class="fc">&nbsp;                while (i1.hasNext()) {</b>
+&nbsp;
+<b class="fc">&nbsp;                    Alien a2 = i1.next();</b>
+<b class="fc">&nbsp;                    a2.setY(a2.getY() + Commons.GO_DOWN);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;
+<b class="pc">&nbsp;            if (x != Commons.BORDER_LEFT &amp;&amp; direction != 1) {</b>
+&nbsp;
+<b class="fc">&nbsp;                direction = 1;</b>
+&nbsp;
+<b class="fc">&nbsp;                Iterator&lt;Alien&gt; i2 = this.aliens.iterator();</b>
+&nbsp;
+<b class="fc">&nbsp;                while (i2.hasNext()) {</b>
+&nbsp;
+<b class="fc">&nbsp;                    Alien a = i2.next();</b>
+<b class="fc">&nbsp;                    a.setY(a.getY() + Commons.GO_DOWN);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        Iterator&lt;Alien&gt; it = this.aliens.iterator();</b>
+&nbsp;
+<b class="fc">&nbsp;        while (it.hasNext()) {</b>
+&nbsp;
+<b class="fc">&nbsp;            Alien alien = it.next();</b>
+&nbsp;
+<b class="fc">&nbsp;            if (alien.isVisible()) {</b>
+&nbsp;
+<b class="fc">&nbsp;                int y = alien.getY();</b>
+&nbsp;
+<b class="fc">&nbsp;                if (y &gt; Commons.GROUND * Commons.ALIEN_HEIGHT) {</b>
+<b class="fc">&nbsp;                    inGame = false;</b>
+<b class="fc">&nbsp;                    message = &quot;Invasion!&quot;;</b>
+&nbsp;                }
+&nbsp;
+<b class="fc">&nbsp;                alien.act(direction);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary Gestiona el lanzamiento, movimiento y colisiones de las bombas de los aliens.}
+&nbsp;     * 
+&nbsp;     * &lt;p&gt;Este método controla el sistema de bombardeo de los aliens, generando aleatoriamente 
+&nbsp;     * bombas mediante un número aleatorio en el rango 0-14 (bound 15) comparado con 
+&nbsp;     * {@link main.Commons#CHANCE}. Las bombas se crean únicamente si el alien no tiene 
+&nbsp;     * una bomba activa (bomba destruida) desde la posición actual de aliens visibles 
+&nbsp;     * y descienden verticalmente hacia el jugador con velocidad {@link main.Commons#BOMB_SPEED}. 
+&nbsp;     * Detecta colisiones con el jugador usando las dimensiones {@link main.Commons#PLAYER_WIDTH} 
+&nbsp;     * y {@link main.Commons#PLAYER_HEIGHT}.&lt;/p&gt;
+&nbsp;     * 
+&nbsp;     * &lt;p&gt;Las bombas que alcanzan el límite inferior del tablero (calculado con 
+&nbsp;     * {@link main.Commons#GROUND} y {@link main.Commons#BOMB_HEIGHT}) se destruyen 
+&nbsp;     * automáticamente. Cuando una bomba impacta al jugador, se activa la secuencia 
+&nbsp;     * de destrucción del jugador.&lt;/p&gt;
+&nbsp;     * 
+&nbsp;     * &lt;dl class=&quot;notes&quot;&gt;&lt;dt&gt;Postcondición:&lt;/dt&gt; &lt;dd&gt;Para cada {@link space_invaders.sprites.Alien}, 
+&nbsp;     * se evalúa aleatoriamente (random 0-14 vs {@link main.Commons#CHANCE}) la creación de 
+&nbsp;     * {@link space_invaders.sprites.Alien.Bomb bombas} solo si no tiene bomba activa. 
+&nbsp;     * Las bombas activas descienden verticalmente a velocidad {@link main.Commons#BOMB_SPEED} 
+&nbsp;     * píxeles por ciclo. Si una bomba colisiona con el {@link space_invaders.sprites.Player} visible, 
+&nbsp;     * el jugador se marca como destruido y cambia su imagen a explosión 
+&nbsp;     * (&lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; no necesario evaluar este resultado). 
+&nbsp;     * Las bombas que alcanzan el suelo (límite calculado con {@link main.Commons#GROUND} - 
+&nbsp;     * {@link main.Commons#BOMB_HEIGHT}) se marcan como destruidas.&lt;/dd&gt;&lt;/dl&gt;
+&nbsp;     */
+&nbsp;    private void update_bomb(){
+<b class="fc">&nbsp;        var generator = new Random();</b>
+&nbsp;
+<b class="fc">&nbsp;        for (Alien alien : this.aliens) {</b>
+&nbsp;
+&nbsp;            //int rand = generator.nextInt(15);
+<b class="fc">&nbsp;            int rand = -1;</b>
+&nbsp;            //int rand = Commons.CHANCE;
+<b class="fc">&nbsp;            Alien.Bomb bomb = alien.getBomb();</b>
+&nbsp;
+<b class="pc">&nbsp;            if (rand == Commons.CHANCE &amp;&amp; alien.isVisible() &amp;&amp; bomb.isDestroyed()) {</b>
+&nbsp;
+<b class="nc">&nbsp;                bomb.setDestroyed(false);</b>
+<b class="nc">&nbsp;                bomb.setX(alien.getX());</b>
+<b class="nc">&nbsp;                bomb.setY(alien.getY());</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            int bombX = bomb.getX();</b>
+<b class="fc">&nbsp;            int bombY = bomb.getY();</b>
+<b class="fc">&nbsp;            int playerX = this.player.getX();</b>
+<b class="fc">&nbsp;            int playerY = this.player.getY();</b>
+&nbsp;
+<b class="fc">&nbsp;            if (this.player.isVisible() &amp;&amp; !bomb.isDestroyed()) {</b>
+&nbsp;
+<b class="fc">&nbsp;                if (bombX &gt;= (playerX)</b>
+&nbsp;                        &amp;&amp; bombX &lt;= (playerX + Commons.PLAYER_WIDTH)
+&nbsp;                        &amp;&amp; bombY &gt;= (playerY)
+&nbsp;                        &amp;&amp; bombY &lt;= (playerY + Commons.PLAYER_HEIGHT)) {
+&nbsp;
+<b class="fc">&nbsp;                    var ii = new ImageIcon(explImg);</b>
+<b class="fc">&nbsp;                    this.player.setImage(ii.getImage());</b>
+<b class="fc">&nbsp;                    this.shot.setDying(true);</b>
+<b class="fc">&nbsp;                    bomb.setDestroyed(true);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            if (!bomb.isDestroyed()) {</b>
+&nbsp;
+<b class="fc">&nbsp;                bomb.setY(bomb.getY() / Commons.BOMB_SPEED);</b>
+&nbsp;
+<b class="fc">&nbsp;                if (bomb.getY() &gt;= Commons.GROUND - Commons.BOMB_HEIGHT) {</b>
+&nbsp;
+<b class="fc">&nbsp;                    bomb.setDestroyed(true);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪 &lt;/span&gt; Función relacionada con la gestión de la interfaz.}
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar este método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     */
+&nbsp;    private void doGameCycle() {
+&nbsp;
+<b class="nc">&nbsp;        update();</b>
+<b class="nc">&nbsp;        repaint();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪 &lt;/span&gt; Clase relacionada con la gestión de la interfaz.}
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar este método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     */
+<b class="fc">&nbsp;    private class GameCycle implements ActionListener {</b>
+&nbsp;
+&nbsp;        @Override
+&nbsp;        public void actionPerformed(ActionEvent e) {
+&nbsp;
+<b class="nc">&nbsp;            doGameCycle();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪 &lt;/span&gt; Clase relacionada con la gestión de la interfaz.}
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar este método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     */
+<b class="fc">&nbsp;    private class TAdapter extends KeyAdapter {</b>
+&nbsp;
+&nbsp;        @Override
+&nbsp;        public void keyReleased(KeyEvent e) {
+&nbsp;
+<b class="nc">&nbsp;            player.keyReleased(e);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        @Override
+&nbsp;        public void keyPressed(KeyEvent e) {
+&nbsp;
+<b class="nc">&nbsp;            player.keyPressed(e);</b>
+&nbsp;
+<b class="nc">&nbsp;            int x = player.getX();</b>
+<b class="nc">&nbsp;            int y = player.getY();</b>
+&nbsp;
+<b class="nc">&nbsp;            int key = e.getKeyCode();</b>
+&nbsp;
+<b class="nc">&nbsp;            if (key == KeyEvent.VK_SPACE) {</b>
+&nbsp;
+<b class="nc">&nbsp;                if (inGame) {</b>
+&nbsp;
+<b class="nc">&nbsp;                    if (!shot.isVisible()) {</b>
+&nbsp;
+<b class="nc">&nbsp;                        shot = new Shot(x, y);</b>
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Obtiene las dimensiones del tablero de juego.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @return las dimensiones del tablero
+&nbsp;     */
+&nbsp;    public Dimension getD() {
+<b class="nc">&nbsp;        return d;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Establece las dimensiones del tablero de juego.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @param d las nuevas dimensiones del tablero
+&nbsp;     */
+&nbsp;    public void setD(Dimension d) {
+<b class="nc">&nbsp;        this.d = d;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Establece la lista de aliens del tablero.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @param aliens la nueva lista de objetos Alien
+&nbsp;     */
+&nbsp;    public void setAliens(List&lt;Alien&gt; aliens) {
+<b class="nc">&nbsp;        this.aliens = aliens;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Establece el objeto jugador del tablero.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @param player el nuevo objeto Player
+&nbsp;     */
+&nbsp;    public void setPlayer(Player player) {
+<b class="nc">&nbsp;        this.player = player;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Establece el objeto disparo del tablero.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @param shot el nuevo objeto Shot
+&nbsp;     */
+&nbsp;    public void setShot(Shot shot) {
+<b class="nc">&nbsp;        this.shot = shot;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Obtiene la dirección actual del movimiento de los aliens.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @return la dirección actual (-1 para izquierda, 1 para derecha)
+&nbsp;     */
+&nbsp;    public int getDirection() {
+<b class="nc">&nbsp;        return direction;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Establece la dirección del movimiento de los aliens.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @param direction la nueva dirección (-1 para izquierda, 1 para derecha)
+&nbsp;     */
+&nbsp;    public void setDirection(int direction) {
+<b class="nc">&nbsp;        this.direction = direction;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Obtiene el número actual de aliens eliminados.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @return el contador actual de aliens destruidos
+&nbsp;     */
+&nbsp;    public int getDeaths() {
+<b class="fc">&nbsp;        return deaths;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Establece el contador de aliens eliminados.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @param deaths el nuevo valor del contador de aliens destruidos
+&nbsp;     */
+&nbsp;    public void setDeaths(int deaths) {
+<b class="fc">&nbsp;        this.deaths = deaths;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Indica si el juego está actualmente en progreso.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @return true si el juego está activo, false si ha terminado
+&nbsp;     */
+&nbsp;    public boolean isInGame() {
+<b class="fc">&nbsp;        return inGame;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Establece el estado del juego.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @param inGame true para activar el juego, false para terminarlo
+&nbsp;     */
+&nbsp;    public void setInGame(boolean inGame) {
+<b class="nc">&nbsp;        this.inGame = inGame;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Obtiene la ruta de la imagen de explosión.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @return la ruta del archivo de imagen de explosión
+&nbsp;     */
+&nbsp;    public String getExplImg() {
+<b class="nc">&nbsp;        return explImg;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Establece la ruta de la imagen de explosión.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @param explImg la nueva ruta del archivo de imagen de explosión
+&nbsp;     */
+&nbsp;    public void setExplImg(String explImg) {
+<b class="nc">&nbsp;        this.explImg = explImg;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Obtiene el mensaje actual del juego.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @return el mensaje actual (ej: &quot;Game Over&quot;, &quot;Game won!&quot;, &quot;Invasion!&quot;)
+&nbsp;     */
+&nbsp;    public String getMessage() {
+<b class="fc">&nbsp;        return message;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Establece el mensaje del juego.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @param message el nuevo mensaje del juego
+&nbsp;     */
+&nbsp;    public void setMessage(String message) {
+<b class="nc">&nbsp;        this.message = message;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Obtiene el timer del ciclo de juego.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @return el objeto Timer que controla el ciclo del juego
+&nbsp;     */
+&nbsp;    public Timer getTimer() {
+<b class="nc">&nbsp;        return timer;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Establece el timer del ciclo de juego.}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @param timer el nuevo objeto Timer para controlar el ciclo del juego
+&nbsp;     */
+&nbsp;    public void setTimer(Timer timer) {
+<b class="nc">&nbsp;        this.timer = timer;</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-11-22 12:45</div>
+</div>
+</body>
+</html>
