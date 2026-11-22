@@ -1,0 +1,327 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Alien</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">space_invaders.sprites</a>
+</div>
+
+<h1>Coverage Summary for Class: Alien (space_invaders.sprites)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Alien</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94,4%
+  </span>
+  <span class="absValue">
+    (17/18)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Alien$Bomb</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92,3%
+  </span>
+  <span class="absValue">
+    (12/13)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (6/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93,5%
+  </span>
+  <span class="absValue">
+    (29/31)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package space_invaders.sprites;
+&nbsp;
+&nbsp;import main.Commons;
+&nbsp;
+&nbsp;import javax.swing.ImageIcon;
+&nbsp;
+&nbsp;/**
+&nbsp; * {@summary Clase que representa un alien en el juego Space Invaders.}
+&nbsp; * 
+&nbsp; * Cada alien tiene una posición (x, y) y puede lanzar una bomba.
+&nbsp; * Proporciona métodos para inicializar el alien, moverlo y acceder a su bomba. 
+&nbsp; * La clase {@link Bomb} es una clase interna que representa la bomba lanzada por el alien.
+&nbsp; */
+&nbsp;public class Alien extends Sprite {
+&nbsp;
+&nbsp;    private Bomb bomb;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Inicializa un nuevo alien
+&nbsp;     * @param x coordenada X de la posición del nu
+&nbsp;     * @param y coordenada Y de la posición del nuevo alien
+&nbsp;     * */
+<b class="fc">&nbsp;    public Alien(int x, int y) {</b>
+&nbsp;
+<b class="fc">&nbsp;        initAlien(x, y);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary Configura el estado inicial del alien estableciendo su posición en el tablero.}
+&nbsp;     * 
+&nbsp;     * Este método prepara el alien para participar en el juego, asignándole una ubicación
+&nbsp;     * específica y todos los recursos necesarios para su funcionamiento. El alien quedará
+&nbsp;     * completamente operativo tras la ejecución.
+&nbsp;     * 
+&nbsp;     * El método garantiza que el alien siempre tendrá una posición válida dentro del
+&nbsp;     * área de juego, independientemente de los valores de entrada proporcionados. Si alguna de las coordenadas indicadas supera los márgenes de la pantalla, se ubicará en el máximo permitido.
+&nbsp;     * Por ejemplo, si la coordenada X indicada supera el margen de la pantalla, se asignará a X el valor máximo posible, es decir, el ancho de la pantalla.
+&nbsp;     * Si se introduce alguna coordenada negativa, se reemplazará por 0.
+&nbsp;     * 
+&nbsp;     * @param x coordenada horizontal donde se desea ubicar el alien
+&nbsp;     * @param y coordenada vertical donde se desea ubicar el alien
+&nbsp;     * 
+&nbsp;     * &lt;dl class=&quot;notes&quot;&gt;&lt;dt&gt;Postcondición:&lt;/dt&gt; &lt;dd&gt;El alien queda listo en la posición especificada
+&nbsp;     * y su posición es válida dentro del tablero de juego.&lt;/dd&gt;&lt;/dl&gt;
+&nbsp;     */
+&nbsp;     private void initAlien(int x, int y) {
+&nbsp;
+<b class="fc">&nbsp;        if (x&gt; Commons.BOARD_WIDTH){</b>
+<b class="fc">&nbsp;            this.x = Commons.BOARD_WIDTH;</b>
+<b class="fc">&nbsp;        } if (x&lt;0){</b>
+<b class="fc">&nbsp;            this.x = 0;</b>
+<b class="fc">&nbsp;        } if (y&gt; Commons.BOARD_HEIGHT){</b>
+<b class="fc">&nbsp;            this.y = Commons.BOARD_HEIGHT;</b>
+<b class="fc">&nbsp;        } if (y&lt;0){</b>
+<b class="fc">&nbsp;            this.y=0;</b>
+&nbsp;        }
+&nbsp;        else
+&nbsp;        {
+<b class="fc">&nbsp;            this.x = x;</b>
+<b class="fc">&nbsp;            this.y = y;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        bomb = new Bomb(x, y);</b>
+&nbsp;
+<b class="fc">&nbsp;        var alienImg = &quot;src/main/resources/images/alien.png&quot;;</b>
+<b class="fc">&nbsp;        var ii = new ImageIcon(alienImg);</b>
+&nbsp;
+<b class="fc">&nbsp;        setImage(ii.getImage());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary Ejecuta una acción de movimiento del alien en la dirección especificada.}
+&nbsp;     * 
+&nbsp;     * &lt;p&gt;Este método actualiza la posición horizontal del alien según el parámetro
+&nbsp;     * de dirección proporcionado. El alien se desplazará en el tablero de juego
+&nbsp;     * manteniendo su posición vertical constante.&lt;/p&gt;
+&nbsp;     * 
+&nbsp;     * @param direction valor que determina la dirección y magnitud del movimiento horizontal
+&nbsp;     * 
+&nbsp;     * &lt;dl class=&quot;notes&quot;&gt;&lt;dt&gt;Postcondición:&lt;/dt&gt; &lt;dd&gt;La posición horizontal del alien se actualiza 
+&nbsp;     * según la dirección especificada.&lt;/dd&gt;&lt;/dl&gt;
+&nbsp;     */
+&nbsp;    public void act(int direction) {
+&nbsp;
+<b class="nc">&nbsp;        this.x += direction;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Devuelve el objeto explosión asociado al alien}
+&nbsp;     * 
+&nbsp;     * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;     * @return bomb
+&nbsp;     * */
+&nbsp;    public Bomb getBomb() {
+&nbsp;
+<b class="fc">&nbsp;        return bomb;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@summary Clase interna que representa una bomba lanzada por un alien.}
+&nbsp;     * 
+&nbsp;     * La bomba tiene una posición (x, y) y un estado de destrucción.
+&nbsp;     * Proporciona métodos para inicializar la bomba, verificar su estado
+&nbsp;     * y modificar su estado de destrucción.
+&nbsp;     */
+&nbsp;    public class Bomb extends Sprite {
+&nbsp;        
+&nbsp;        private boolean destroyed;
+&nbsp;
+&nbsp;        /**
+&nbsp;         * {@summary Crea una nueva bomba en la posición indicada}
+&nbsp;         * 
+&nbsp;         * @param x coordenada X de la posición de la nueva explosión
+&nbsp;         * @param y coordenada Y de la posición de la nueva explosión
+&nbsp;         * */
+<b class="fc">&nbsp;        public Bomb(int x, int y) {</b>
+&nbsp;
+<b class="fc">&nbsp;            initBomb(x, y);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        /**
+&nbsp;         * {@summary Inicializa el nuevo objeto bomba y le asigna las coordenadas indicadas y la imagen correspondiente en la interfaz}
+&nbsp;         * 
+&nbsp;         * @param x coordenada X de la posición de la nueva bomba
+&nbsp;         * @param y coordenada Y de la posición de la nueva bomba
+&nbsp;         * Si el valor X o Y indicados superan el margen de la pantalla, se les asignará el valor máximo permitido.
+&nbsp;         * Si se introduce algún valor negativo, será reemplazado por 0.
+&nbsp;         * */
+&nbsp;        private void initBomb(int x, int y) {
+&nbsp;
+<b class="fc">&nbsp;            setDestroyed(true);</b>
+&nbsp;
+<b class="fc">&nbsp;            if (x&lt;= Commons.BOARD_WIDTH &amp;&amp; y&lt;= Commons.BOARD_HEIGHT) {</b>
+<b class="fc">&nbsp;                this.x += x;</b>
+<b class="fc">&nbsp;                this.y += y;</b>
+&nbsp;            } else
+&nbsp;            {
+<b class="fc">&nbsp;                this.x = Commons.BOARD_WIDTH;</b>
+<b class="fc">&nbsp;                this.y = Commons.BOARD_HEIGHT;</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            var bombImg = &quot;src/main/resources/images/bomb.png&quot;;</b>
+<b class="fc">&nbsp;            var ii = new ImageIcon(bombImg);</b>
+<b class="fc">&nbsp;            setImage(ii.getImage());</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        /**
+&nbsp;         * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Establece el estado de destrucción de la bomba.}
+&nbsp;         * 
+&nbsp;         * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar este método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;         * @param destroyed valor booleano que indica si la bomba está destruida (true) o no (false)
+&nbsp;         */
+&nbsp;        public void setDestroyed(boolean destroyed) {
+&nbsp;
+<b class="fc">&nbsp;            this.destroyed = destroyed;</b>
+&nbsp;        }
+&nbsp;        
+&nbsp;        /**
+&nbsp;         * {@summary &lt;span class=&quot;alert-small&quot;&gt;⛔🧪&lt;/span&gt; Indica si la bomba está destruida.}
+&nbsp;         * 
+&nbsp;         * &lt;br&gt;&lt;br&gt;&lt;span class=&quot;alert&quot;&gt;⛔🧪 No es necesario probar el método mediante pruebas unitarias.&lt;/span&gt;
+&nbsp;         * @return true si la bomba está destruida, false en caso contrario
+&nbsp;         */
+&nbsp;        public boolean isDestroyed() {
+&nbsp;
+<b class="nc">&nbsp;            return destroyed;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-11-22 13:08</div>
+</div>
+</body>
+</html>
