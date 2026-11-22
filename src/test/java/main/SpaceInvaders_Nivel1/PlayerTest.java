@@ -17,18 +17,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
 
+    //Test id: PlayerCN1
     @Test
     public void specialValueTesting_Player() {
         Player player = new Player();
         assertNotNull(player, "Player should be created succesfully");
-
     }
 
-    //public initPlayer --> casos especiales (si esta en las coordenadas iniciales)
+    //Test id: InitPlayerCN1
     @Test
-    public void inicializarPlayer() {
+    public void specialValueTesting_InitPlayer() {
         Player player = new Player();
-        try{
+        try {
             Method metodo = Player.class.getDeclaredMethod("initPlayer");
             metodo.setAccessible(true);
             metodo.invoke(player);
@@ -57,58 +57,35 @@ public class PlayerTest {
         }
     }
 
-    @ParameterizedTest
-    @CsvFileSource(resources = "NormalBoundaryValueTestingActPlayer.csv", numLinesToSkip = 1)
-    public void normalBoundaryValueTesting_act(int x, int dx, int output) {
-        try{
-            Player player = new Player();
-            player.setX(x);
-
-            Field valdx = Sprite.class.getDeclaredField("dx");
-            valdx.setAccessible(true);
-            valdx.set(player,dx);
-
-            //El JAR da problemas para establecer width así que le asignamos
-            //manualmente el valor Commons.PLAYER_WIDTH
-            Field valw = Player.class.getDeclaredField("width");
-            valw.setAccessible(true);
-            valw.set(player,Commons.PLAYER_WIDTH);
-
-            player.act();
-            assertEquals(output,player.getX(),"Player x should be " + output + ". Actual x is: "+ player.getX());
-
-        }catch (NoSuchFieldException | IllegalAccessException e ) {
-            throw new RuntimeException(e);
-        }
-    }
-
+    //Test ids: ActPlayerCN1 - ActPlayerCN9
     @ParameterizedTest
     @CsvFileSource(resources = "WeakNormalEquivalenceClassAndNormalBoundaryValueTestingActPlayer.csv", numLinesToSkip = 1)
     public void weakNormalEquivalenceClassAndNormalBoundaryValueTesting_act(int x, int dx, int output) {
-        try{
+        try {
             Player player = new Player();
             player.setX(x);
 
             Field valdx = Sprite.class.getDeclaredField("dx");
             valdx.setAccessible(true);
-            valdx.set(player,dx);
+            valdx.set(player, dx);
 
             //El JAR da problemas para establecer width así que le asignamos
             //manualmente el valor Commons.PLAYER_WIDTH
             Field valw = Player.class.getDeclaredField("width");
             valw.setAccessible(true);
-            valw.set(player,Commons.PLAYER_WIDTH);
+            valw.set(player, Commons.PLAYER_WIDTH);
 
             player.act();
-            assertEquals(output,player.getX(),"Player x should be " + output + ". Actual x is: "+ player.getX());
+            assertEquals(output, player.getX(), "Player x should be " + output + ". Actual x is: " + player.getX());
 
-        }catch (NoSuchFieldException | IllegalAccessException e ) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
 
+    //Test id: KeyPressedCN1
     @Test
-    public void testCajaNegraKeyPressed1(){
+    public void weakRobustEquivalenceClass_keyPressed1() {
         Component source = new Button();
         Player p = new Player();
 
@@ -135,12 +112,11 @@ public class PlayerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
+    //Test id: KeyPressedCN2
     @Test
-    public void testCajaNegraKeyPressed2() throws NoSuchFieldException, IllegalAccessException {
+    public void weakRobustEquivalenceClass_keyPressed2() {
         Component source = new Button();
         Player p = new Player();
 
@@ -163,19 +139,14 @@ public class PlayerTest {
             assertEquals(dxExpected, valorDx, "El esperado: " + dxExpected + " y el dado es: " + valorDx);
             System.out.println("El esperado: " + dxExpected + " y el dado es: " + valorDx);
             p.keyReleased(eventDerecha);
-
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
+    //Test id: KeyPressedCN3
     @Test
-    public void testCajaNegraKeyPressed3(){
+    public void weakRobustEquivalenceClass_keyPressed3() {
         Component source = new Button();
         Player p = new Player();
 
@@ -199,17 +170,14 @@ public class PlayerTest {
             assertEquals(dxExpected, valorDx, "El esperado: " + dxExpected + " y el dado es: " + valorDx);
             System.out.println("El esperado: " + dxExpected + " y el dado es: " + valorDx);
             p.keyReleased(eventKeyIncorrect);
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
+    //Test id: KeyReleasedCN1
     @Test
-    public void testCajaNegrakeyReleased1(){
+    public void weakRobustEquivalenceClass_keyReleased1() {
         Component source = new Button();
         Player p = new Player();
 
@@ -237,8 +205,9 @@ public class PlayerTest {
         }
     }
 
+    //Test id: KeyReleasedCN2
     @Test
-    public void testCajaNegrakeyReleased2(){
+    public void weakRobustEquivalenceClass_keyReleased2() {
         Component source = new Button();
         Player p = new Player();
 
@@ -266,8 +235,9 @@ public class PlayerTest {
         }
     }
 
+    //Test id: KeyReleasedCN3
     @Test
-    public void testCajaNegrakeyReleased3(){
+    public void weakRobustEquivalenceClass_keyReleased3() {
         Component source = new Button();
         Player p = new Player();
 

@@ -21,19 +21,19 @@ public class BoardTest {
     //Camino: A-[B-(C-D-C)6-B]4-E
     @Test
     public void gameInitCB1() {
-        try{
+        try {
             Board board = new Board();
 
             Field aliens = Board.class.getDeclaredField("aliens");
             aliens.setAccessible(true);
-            List<Alien> listaAliens =(List<Alien>)  aliens.get(board);
+            List<Alien> listaAliens = (List<Alien>) aliens.get(board);
 
             Method metodo = Board.class.getDeclaredMethod("gameInit");
             metodo.setAccessible(true);
             metodo.invoke(board);
 
             int k = 0;
-            for(int j = 0; j < 4; j++) {
+            for (int j = 0; j < 4; j++) {
                 for (int i = 0; i < 6; i++) {
                     assertEquals(Commons.ALIEN_INIT_X + i * Commons.ALIEN_SEPARATOR, listaAliens.get(k).getX());
                     assertEquals(Commons.ALIEN_INIT_Y + j * Commons.ALIEN_SEPARATOR, listaAliens.get(k).getY());
@@ -114,6 +114,146 @@ public class BoardTest {
 
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    //Test id: updateShotsCB1
+    //Camino: A-B-FIN
+    @Test
+    public void updateShotsCB1() {
+        try {
+            Board board = new Board();
+
+            Field campoVisible = Sprite.class.getDeclaredField("visible");
+            campoVisible.setAccessible(true);
+            campoVisible.set(board.getShot(), false);
+
+            Method updateShotsMethod = Board.class.getDeclaredMethod("update_shots");
+            updateShotsMethod.setAccessible(true);
+
+            updateShotsMethod.invoke(board);
+
+            assertEquals(board.getShot().isVisible(), false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Test id: updateShotsCB2
+    //Camino: A-B-C-D-I-J-L-FIN
+    @Test
+    public void updateShotsCB2() {
+        try {
+            Board board = new Board();
+            List<Alien> aliens = board.getAliens();
+            aliens.clear();
+
+            Method updateShotsMethod = Board.class.getDeclaredMethod("update_shots");
+            updateShotsMethod.setAccessible(true);
+
+            board.getShot().setY(5);
+            int y = board.getShot().getY();
+            updateShotsMethod.invoke(board);
+
+            assertEquals((y - Commons.SHOT_SPEED), board.getShot().getY(), board.getShot().getY());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Test id: updateShotsCB3
+    //Camino: A-B-C-D-I-J-K-FIN
+    @Test
+    public void updateShotsCB3() {
+        try {
+            Board board = new Board();
+            List<Alien> aliens = board.getAliens();
+            aliens.clear();
+
+            Method updateShotsMethod = Board.class.getDeclaredMethod("update_shots");
+            updateShotsMethod.setAccessible(true);
+
+            int muertes = board.getDeaths();
+            updateShotsMethod.invoke(board);
+            assertEquals(board.getDeaths(), muertes + 1);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Test id: updateShotsCB4
+    //Camino: A-B-C-[D-E-F-D]*-I-J-K-FIN
+    @Test
+    public void updateShotsCB4() {
+        try {
+            Board board = new Board();
+            List<Alien> aliens = board.getAliens();
+
+            Method updateShotsMethod = Board.class.getDeclaredMethod("update_shots");
+            updateShotsMethod.setAccessible(true);
+
+            for (Alien alien : aliens) {
+                alien.die();
+            }
+
+            int muertes = board.getDeaths();
+            updateShotsMethod.invoke(board);
+
+            for (Alien alien : aliens) {
+                assertFalse(alien.isVisible());
+            }
+            assertEquals(board.getDeaths(), muertes + 1);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Test id: updateShotsCB5
+    //Camino: A-B-C-[D-E-F-G_D]*-I-J-L-FIN
+    @Test
+    public void updateShotsCB5() {
+        try {
+            Board board = new Board();
+            board.getShot().setY(Commons.GROUND);
+            int y = board.getShot().getY();
+            Method updateShotsMethod = Board.class.getDeclaredMethod("update_shots");
+            updateShotsMethod.setAccessible(true);
+
+            updateShotsMethod.invoke(board);
+
+            assertEquals(board.getShot().getY(), y - Commons.SHOT_SPEED);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Test id: UpdateShotsCB6
+    //Camino: A-B-C-[D-E-F-G]*-H-[D-E-F-D]*-I-J-K-FIN
+    @Test
+    public void updateShotsCB6() {
+        try {
+            Board board = new Board();
+
+            Field campoVisible = Sprite.class.getDeclaredField("visible");
+            campoVisible.setAccessible(true);
+            List<Alien> aliens = board.getAliens();
+
+            Method updateShotsMethod = Board.class.getDeclaredMethod("update_shots");
+            updateShotsMethod.setAccessible(true);
+
+            board.getShot().setY(5);
+            board.getShot().setX(152);
+            campoVisible.set(board.getShot(), true);
+            int muertes = board.getDeaths();
+            updateShotsMethod.invoke(board);
+
+            assertEquals(board.getDeaths(), muertes + 1);
+            assertFalse(board.getShot().isVisible());
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -598,143 +738,5 @@ public class BoardTest {
         }
     }
 
-    //Test id: updateShotsCB1
-    //Camino: A-B-FIN
-    @Test
-    public void updateShotsCB1() {
-        try {
-            Board board = new Board();
 
-            Field campoVisible = Sprite.class.getDeclaredField("visible");
-            campoVisible.setAccessible(true);
-            campoVisible.set(board.getShot(), false);
-
-            Method updateShotsMethod = Board.class.getDeclaredMethod("update_shots");
-            updateShotsMethod.setAccessible(true);
-
-            updateShotsMethod.invoke(board);
-
-            assertEquals(board.getShot().isVisible(), false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    //Test id: updateShotsCB2
-    //Camino: A-B-C-D-I-J-L-FIN
-    @Test
-    public void updateShotsCB2() {
-        try {
-            Board board = new Board();
-            List<Alien> aliens = board.getAliens();
-            aliens.clear();
-
-            Method updateShotsMethod = Board.class.getDeclaredMethod("update_shots");
-            updateShotsMethod.setAccessible(true);
-
-            board.getShot().setY(5);
-            int y = board.getShot().getY();
-            updateShotsMethod.invoke(board);
-
-            assertEquals((y-Commons.SHOT_SPEED), board.getShot().getY(), board.getShot().getY());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    //Test id: updateShotsCB3
-    //Camino: A-B-C-D-I-J-K-FIN
-    @Test
-    public void updateShotsCB3() {
-        try {
-            Board board = new Board();
-            List<Alien> aliens = board.getAliens();
-            aliens.clear();
-
-            Method updateShotsMethod = Board.class.getDeclaredMethod("update_shots");
-            updateShotsMethod.setAccessible(true);
-
-            int muertes = board.getDeaths();
-            updateShotsMethod.invoke(board);
-            assertEquals(board.getDeaths(), muertes+1);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    //Test id: updateShotsCB4
-    //Camino: A-B-C-[D-E-F-D]*-I-J-K-FIN
-    @Test
-    public void updateShotsCB4() {
-        try {
-            Board board = new Board();
-            List<Alien> aliens = board.getAliens();
-
-            Method updateShotsMethod = Board.class.getDeclaredMethod("update_shots");
-            updateShotsMethod.setAccessible(true);
-
-            for (Alien alien : aliens) {
-                alien.die();
-            }
-
-            int muertes = board.getDeaths();
-            updateShotsMethod.invoke(board);
-
-            for (Alien alien : aliens) {
-                assertFalse(alien.isVisible());
-            }
-            assertEquals(board.getDeaths(), muertes+1);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    //Test id: updateShotsCB5
-    //Camino: A-B-C-[D-E-F-G_D]*-I-J-L-FIN
-    @Test
-    public void updateShotsCB5() {
-        try {
-            Board board = new Board();
-            board.getShot().setY(Commons.GROUND);
-            int y = board.getShot().getY();
-            Method updateShotsMethod = Board.class.getDeclaredMethod("update_shots");
-            updateShotsMethod.setAccessible(true);
-
-            updateShotsMethod.invoke(board);
-
-            assertEquals(board.getShot().getY(), y-Commons.SHOT_SPEED);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    //Test id: UpdateShotsCB6
-    //Camino: A-B-C-[D-E-F-G]*-H-[D-E-F-D]*-I-J-K-FIN
-    @Test
-    public void updateShotsCB6() {
-        try {
-            Board board = new Board();
-
-            Field campoVisible = Sprite.class.getDeclaredField("visible");
-            campoVisible.setAccessible(true);
-            List<Alien> aliens = board.getAliens();
-
-            Method updateShotsMethod = Board.class.getDeclaredMethod("update_shots");
-            updateShotsMethod.setAccessible(true);
-
-            board.getShot().setY(5);
-            board.getShot().setX(152);
-            campoVisible.set(board.getShot(), true);
-            int muertes = board.getDeaths();
-            updateShotsMethod.invoke(board);
-
-            assertEquals(board.getDeaths(), muertes+1);
-            assertFalse(board.getShot().isVisible());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

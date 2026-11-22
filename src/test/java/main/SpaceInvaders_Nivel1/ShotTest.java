@@ -12,22 +12,25 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ShotTest {
 
+    //Test id: ShotCN1
     @Test
-    public void testCajaNegraShotCreado(){
-        int x = 2;
-        int y = 7;
-        Shot shot = new Shot(x,y);
-        assertNotNull(shot, "Shot should be created succesfully");
-    }
-
-    @Test
-    public void testCajaNegraShotCreado2(){
+    public void specialValueTesting_shot() {
         Shot shot = new Shot();
         assertNotNull(shot, "Shot should be created succesfully");
     }
 
+    //Test id: ShotxyCN1
     @Test
-    public void testCajaNegraShotIniciado(){
+    public void specialValueTesting_shotxy() {
+        int x = 150;
+        int y = 20;
+        Shot shot = new Shot(x, y);
+        assertNotNull(shot, "Shot should be created succesfully");
+    }
+
+    //Test id: InitShotCN1
+    @Test
+    public void specialValueTesting_InitShot() {
         try {
             Shot shot = new Shot();
             Player player = new Player();
@@ -48,8 +51,8 @@ public class ShotTest {
             assertEquals(x + (int) h.get(shot), shot.getX(),
                     "Shot no inicializado correctamente en el eje X, Y es: " + shot.getY());
             assertEquals(y - (int) v.get(shot), shot.getY(),
-                    "Shot no inicializado correctamente en el eje Y, X es: "+ shot.getX());
-        }catch (Exception e){
+                    "Shot no inicializado correctamente en el eje Y, X es: " + shot.getX());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

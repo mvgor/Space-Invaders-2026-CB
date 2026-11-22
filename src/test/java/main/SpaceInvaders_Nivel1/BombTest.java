@@ -14,30 +14,32 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BombTest {
 
-    private final Alien alien = new Alien(0,0);
-    private final Alien.Bomb bomb = alien.new Bomb(0,0);
+    private final Alien alien = new Alien(0, 0);
+    private final Alien.Bomb bomb = alien.new Bomb(0, 0);
 
+    //Test id: BombCN1
     @Test
-    public void testCajaNegraBombaCreada(){
+    public void specialValueTesting_bomb() {
         int x = 2;
         int y = 7;
-        Alien alien = new Alien(x,y);
-        Alien.Bomb bomb = alien.new Bomb(x,y);
+        Alien alien = new Alien(x, y);
+        Alien.Bomb bomb = alien.new Bomb(x, y);
         assertNotNull(bomb, "Bomb should be created succesfully");
-        assertEquals(x, bomb.getX(), "Bomb x should be "+x);
-        assertEquals(y, bomb.getY(), "Bomb y should be "+y);
+        assertEquals(x, bomb.getX(), "Bomb x should be " + x);
+        assertEquals(y, bomb.getY(), "Bomb y should be " + y);
     }
 
+    //Test ids: InitBombCN1 - InitBombCN14
     @ParameterizedTest
     @CsvFileSource(resources = "RobustBoundaryValueTestingInitBomb.csv", numLinesToSkip = 1)
-    public void robustBoundaryValueTesting_initBomb(int inX, int inY, int outX, int outY){
-        try{
-            Alien alien = new Alien(0,0);
-            Alien.Bomb bomb = alien.new Bomb(0,0);
+    public void robustBoundaryValueTesting_initBomb(int inX, int inY, int outX, int outY) {
+        try {
+            Alien alien = new Alien(0, 0);
+            Alien.Bomb bomb = alien.new Bomb(0, 0);
 
             Method method = Alien.Bomb.class.getDeclaredMethod("initBomb", int.class, int.class);
             method.setAccessible(true);
-            method.invoke(bomb, inX,inY);
+            method.invoke(bomb, inX, inY);
 
             Field valx = Sprite.class.getDeclaredField("x");
             valx.setAccessible(true);
@@ -46,34 +48,35 @@ public class BombTest {
             valy.setAccessible(true);
             int valory = (int) valy.get(bomb);
 
-            assertEquals(outX, valorx, "Bomb x should be " + outX + ". Actual x is: "+ valorx);
-            assertEquals(outY, valory,"Bomb y should be " + outY + ". Actual y is: "+ valorx);
+            assertEquals(outX, valorx, "Bomb x should be " + outX + ". Actual x is: " + valorx);
+            assertEquals(outY, valory, "Bomb y should be " + outY + ". Actual y is: " + valorx);
 
-        }catch(NoSuchMethodException | IllegalAccessException | InvocationTargetException | NoSuchFieldException e){
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | NoSuchFieldException e) {
             throw new RuntimeException(e);
         }
 
     }
 
+    //Test id: InitBombCN15
     @Test
     public void specialValueTesting_initBomb() {
-        try{
-            Alien alien = new Alien(0,0);
-            Alien.Bomb bomb = alien.new Bomb(0,0);
+        try {
+            Alien alien = new Alien(0, 0);
+            Alien.Bomb bomb = alien.new Bomb(0, 0);
 
             Method method = Alien.Bomb.class.getDeclaredMethod("initBomb", int.class, int.class);
             method.setAccessible(true);
-            method.invoke(bomb, 179,175);
+            method.invoke(bomb, 179, 175);
 
             int actualWidth = bomb.getImage().getWidth(null);
             int actualHeight = bomb.getImage().getHeight(null);
 
             assertNotNull(bomb.getImage(), "Bomb image shouldn't be null");
-            assertEquals(2,actualWidth , "Bomb image width should be " + 2 + ". Actual x is: "+ actualWidth);
-            assertEquals(6,actualHeight,"Bomb image height should be " + 6 + ". Actual x is: "+ actualHeight);
+            assertEquals(2, actualWidth, "Bomb image width should be " + 2 + ". Actual x is: " + actualWidth);
+            assertEquals(6, actualHeight, "Bomb image height should be " + 6 + ". Actual x is: " + actualHeight);
 
-        }catch(NoSuchMethodException | IllegalAccessException | InvocationTargetException e){
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
- }
+    }
 }

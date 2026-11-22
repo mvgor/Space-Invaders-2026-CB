@@ -7,6 +7,7 @@ import space_invaders.sprites.Sprite;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
+
 import static org.junit.Assert.*;
 
 public class PlayerTest {
@@ -14,7 +15,7 @@ public class PlayerTest {
     //Test id: ActPlayerCB1
     //Camino: A-B-D-FIN
     @Test
-    public void actPlayerCB1(){
+    public void actPlayerCB1() {
         Player player = new Player();
         player.setX(10);
 
@@ -25,7 +26,7 @@ public class PlayerTest {
 
             player.act();
 
-            assertEquals(10+dx, player.getX());
+            assertEquals(10 + dx, player.getX());
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -35,7 +36,7 @@ public class PlayerTest {
     //Test id: ActPlayerCB2
     //Camino: A-B-C-D-FIN
     @Test
-    public void actPlayerCB2(){
+    public void actPlayerCB2() {
         Player player = new Player();
         player.setX(1);
 
@@ -47,7 +48,7 @@ public class PlayerTest {
     //Test id: ActPlayerCB3
     //Camino: A-B-D-E-FIN
     @Test
-    public void actPlayerCB3(){
+    public void actPlayerCB3() {
         Player player = new Player();
         player.setX(10740);
 
@@ -59,7 +60,7 @@ public class PlayerTest {
     //Test id: KeyPressedCB1
     //Camino: A-B-D-FIN
     @Test
-    public void keyPressedCB1(){
+    public void keyPressedCB1() {
         Component source = new Button();
         Player p = new Player();
 
@@ -90,7 +91,7 @@ public class PlayerTest {
     //Test id: KeyPressedCB2
     //Camino: A-B-C-D-FIN
     @Test
-    public void keyPressedCB2(){
+    public void keyPressedCB2() {
         Component source = new Button();
         Player p = new Player();
 
@@ -121,7 +122,7 @@ public class PlayerTest {
     //Test id: KeyPressedCB3
     //Camino: A-B-D-E-FIN
     @Test
-    public void keyPressedCB3(){
+    public void keyPressedCB3() {
         Component source = new Button();
         Player p = new Player();
 
@@ -152,7 +153,7 @@ public class PlayerTest {
     //Test id: KeyReleasedCB1
     //Camino: A-B-D-FIN
     @Test
-    public void keyReleasedCB1(){
+    public void keyReleasedCB1() {
         Component source = new Button();
         Player p = new Player();
 
@@ -182,7 +183,7 @@ public class PlayerTest {
     //Test id: KeyReleasedCB2
     //Camino: A-B-C-D-FIN
     @Test
-    public void keyReleasedCB2(){
+    public void keyReleasedCB2() {
         Component source = new Button();
         Player p = new Player();
 
@@ -212,7 +213,7 @@ public class PlayerTest {
     //Test id: KeyReleasedCB3
     //Camino: A-B-D-E-FIN
     @Test
-    public void keyReleasedCB3(){
+    public void keyReleasedCB3() {
         Component source = new Button();
         Player p = new Player();
 
