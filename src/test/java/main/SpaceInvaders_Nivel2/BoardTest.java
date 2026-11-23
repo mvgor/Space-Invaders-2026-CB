@@ -40,7 +40,7 @@ public class BoardTest {
                     k++;
                 }
             }
-            //Prueba PLayer inicializado
+            //Prueba Player inicializado
             Field valX = Sprite.class.getDeclaredField("x");
             valX.setAccessible(true);
             int valorX = (int) valX.get(board.getPlayer());

@@ -53,18 +53,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    67%
+    72,7%
   </span>
   <span class="absValue">
-    (59/88)
+    (64/88)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    61,8%
+    64,2%
   </span>
   <span class="absValue">
-    (97/157)
+    (102/159)
   </span>
 </td>
 </tr>
@@ -126,18 +126,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    62,8%
+    68,1%
   </span>
   <span class="absValue">
-    (59/94)
+    (64/94)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    58,6%
+    60,8%
   </span>
   <span class="absValue">
-    (99/169)
+    (104/171)
   </span>
 </td>
 </tr>
@@ -628,16 +628,16 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 <b class="fc">&nbsp;        for (Alien alien : this.aliens) {</b>
 &nbsp;
-&nbsp;            //int rand = generator.nextInt(15);
-<b class="fc">&nbsp;            int rand = -1;</b>
-&nbsp;            //int rand = Commons.CHANCE;
+<b class="fc">&nbsp;            int rand = generator.nextInt(15);</b>
+<b class="fc">&nbsp;            //int rand = -1;</b>
+<b class="fc">&nbsp;            //int rand = Commons.CHANCE;</b>
 <b class="fc">&nbsp;            Alien.Bomb bomb = alien.getBomb();</b>
 &nbsp;
-<b class="pc">&nbsp;            if (rand == Commons.CHANCE &amp;&amp; alien.isVisible() &amp;&amp; bomb.isDestroyed()) {</b>
+<b class="fc">&nbsp;            if (rand == Commons.CHANCE &amp;&amp; alien.isVisible() &amp;&amp; bomb.isDestroyed()) {</b>
 &nbsp;
-<b class="nc">&nbsp;                bomb.setDestroyed(false);</b>
-<b class="nc">&nbsp;                bomb.setX(alien.getX());</b>
-<b class="nc">&nbsp;                bomb.setY(alien.getY());</b>
+<b class="fc">&nbsp;                bomb.setDestroyed(false);</b>
+<b class="fc">&nbsp;                bomb.setX(alien.getX());</b>
+<b class="fc">&nbsp;                bomb.setY(alien.getY());</b>
 &nbsp;            }
 &nbsp;
 <b class="fc">&nbsp;            int bombX = bomb.getX();</b>
@@ -925,7 +925,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2026-11-22 12:45</div>
+    <div style="float:right;">generated on 2026-11-23 17:22</div>
 </div>
 </body>
 </html>

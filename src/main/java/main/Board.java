@@ -478,8 +478,8 @@ public class Board extends JPanel {
 
         for (Alien alien : this.aliens) {
 
-            //int rand = generator.nextInt(15);
-            int rand = -1;
+            int rand = generator.nextInt(15);
+            //int rand = -1;
             //int rand = Commons.CHANCE;
             Alien.Bomb bomb = alien.getBomb();
 

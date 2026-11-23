@@ -2,7 +2,6 @@ package main.SpaceInvaders_Nivel2;
 
 import main.Commons;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
 import space_invaders.sprites.Alien;
 
 import static org.junit.Assert.assertEquals;

@@ -14,9 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BombTest {
 
-    private final Alien alien = new Alien(0, 0);
-    private final Alien.Bomb bomb = alien.new Bomb(0, 0);
-
     //Test id: BombCN1
     @Test
     public void specialValueTesting_bomb() {
