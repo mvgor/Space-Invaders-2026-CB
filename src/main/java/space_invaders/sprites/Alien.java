@@ -44,7 +44,8 @@ public class Alien extends Sprite {
      * y su posición es válida dentro del tablero de juego.</dd></dl>
      */
      private void initAlien(int x, int y) {
-
+        this.x = x; // Antes estaba dentro del else, ahora a principio del metodo
+        this.y = y; // Antes estaba dentro del else, ahora a principio del metodo
         if (x> Commons.BOARD_WIDTH){
             this.x = Commons.BOARD_WIDTH;
         } if (x<0){
@@ -53,11 +54,6 @@ public class Alien extends Sprite {
             this.y = Commons.BOARD_HEIGHT;
         } if (y<0){
             this.y=0;
-        }
-        else
-        {
-            this.x = x;
-            this.y = y;
         }
 
         bomb = new Bomb(x, y);
