@@ -82,14 +82,14 @@ public class Player extends Sprite {
 
         x += dx;
 
-        if (x <= 2) {
+        if (x <= Commons.BORDER_LEFT) { // DEF-3 Se ha cambiado el 2 por Commons.BORDER_LEFT
 
-            x = 2;
+            x = Commons.BORDER_LEFT; // DEF-3 Se ha cambiado el 2 por Commons.BORDER_LEFT
         }
 
-        if (x >= Commons.BOARD_WIDTH * 2 * width) {
+        if (x >= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT - width) { // DEF-3 Se ha cambiado los * por - y el 2 por Commons.BORDER_RIGHT
 
-            x = Commons.BOARD_WIDTH - 2 * width;
+            x = Commons.BOARD_WIDTH - Commons.BORDER_RIGHT - width; // DEF-3 Se ha cambiado el * por - y el 2 por Commons.BORDER_RIGHT
         }
     }
 
@@ -134,7 +134,7 @@ public class Player extends Sprite {
 
         if (key == KeyEvent.VK_LEFT) {
 
-            dx = 2;
+            dx = 0; // DEF-4 Se ha cambiado el 2 por un 0
         }
 
         if (key == KeyEvent.VK_RIGHT) {
