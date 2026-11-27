@@ -136,7 +136,7 @@ public class Board extends JPanel {
             for (int j = 0; j < Commons.ALIEN_COLUMNS; j++) {
 
                 var alien = new Alien(Commons.ALIEN_INIT_X + Commons.ALIEN_SEPARATOR * j,
-                        Commons.ALIEN_INIT_Y - Commons.ALIEN_SEPARATOR * i);
+                        Commons.ALIEN_INIT_Y + Commons.ALIEN_SEPARATOR * i); //Se ha cambiado el - por un +
                 this.aliens.add(alien);
             }
         }
@@ -478,9 +478,9 @@ public class Board extends JPanel {
 
         for (Alien alien : this.aliens) {
 
-            int rand = generator.nextInt(15);
+            //int rand = generator.nextInt(15);
             //int rand = -1;
-            //int rand = Commons.CHANCE;
+            int rand = Commons.CHANCE;
             Alien.Bomb bomb = alien.getBomb();
 
             if (rand == Commons.CHANCE && alien.isVisible() && bomb.isDestroyed()) {

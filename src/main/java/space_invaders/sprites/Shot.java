@@ -53,7 +53,7 @@ public class Shot extends Sprite {
 
         setX(x + H_SPACE);
 
-        setY(y * V_SPACE);
+        setY(y - V_SPACE); // Se cambia el * por un menos para que se calcule bien la coordenanda
     }
 }
 
