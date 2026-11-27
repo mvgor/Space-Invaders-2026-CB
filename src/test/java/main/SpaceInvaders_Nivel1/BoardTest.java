@@ -8,7 +8,6 @@ import space_invaders.sprites.Player;
 import space_invaders.sprites.Shot;
 import space_invaders.sprites.Sprite;
 
-import java.awt.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -183,6 +182,86 @@ public class BoardTest {
             Method metodo = Board.class.getDeclaredMethod("update_shots");
             metodo.setAccessible(true);
 
+            int deathsBefore = board.getDeaths();
+            int shotYBefore = board.getShot().getY();
+            List<Alien> aliens = board.getAliens();
+            aliens.clear();
+
+            metodo.invoke(board);
+
+            int deathsAfter = board.getDeaths();
+            int shotYAfter = board.getShot().getY();
+
+            assertEquals(deathsBefore, deathsAfter, "Se han eliminado aliens aunque no se haya alcanzado ninguno");
+            assertEquals(shotYBefore - Commons.SHOT_SPEED, shotYAfter, "Shot no avanza a velocidad Commons.SHOT_SPEED");
+
+        } catch (Exception e) {
+            System.out.println("Error al actualizar los aliens");
+        }
+    }
+
+    //Test id: UpdateShotsCN2
+    @Test
+    public void weakNormalEquivalenceClass_updateShots2() {
+        try {
+            Board board = new Board();
+            Method metodo = Board.class.getDeclaredMethod("update_shots");
+            metodo.setAccessible(true);
+
+            int deathsBefore = board.getDeaths();
+            List<Alien> aliens = board.getAliens();
+            Alien alien = aliens.getFirst();
+
+            Shot shot = board.getShot();
+            shot.setX(alien.getX());
+            shot.setY(alien.getY());
+
+            metodo.invoke(board);
+            int deathsAfter = board.getDeaths();
+
+            assertEquals(deathsBefore + 1, deathsAfter,"No se actualizan las muertes correctamente");
+        } catch (Exception e) {
+            System.out.println("Error al actualizar los aliens");
+        }
+    }
+
+    //Test id: UpdateShotsCN3
+    @Test
+    public void weakNormalEquivalenceClass_updateShots3() {
+        try {
+            Board board = new Board();
+            Method metodo = Board.class.getDeclaredMethod("update_shots");
+            metodo.setAccessible(true);
+
+            int deathsBefore = board.getDeaths();
+            List<Alien> aliens = board.getAliens();
+            aliens.clear();
+
+            Shot shot = board.getShot();
+            shot.setY(0);
+
+            metodo.invoke(board);
+
+            int deathsAfter = board.getDeaths();
+
+            assertEquals(deathsBefore, deathsAfter, "Se han eliminado aliens aunque no se haya alcanzado ninguno");
+            assertTrue( shot.getY() <= 0, "La posición de shot no se ha actualizado correctamente");
+            assertFalse(shot.isVisible(), "Shot no debería ser visible fuera del tablero");
+        } catch (Exception e) {
+            System.out.println("Error al actualizar los aliens");
+        }
+    }
+
+/*
+
+    //Test id: UpdateShotsCN1
+    @Test
+    public void weakNormalEquivalenceClass_updateShots1() {
+        try {
+            Board board = new Board();
+            Method metodo = Board.class.getDeclaredMethod("update_shots");
+            metodo.setAccessible(true);
+
             Field campoDeaths = Board.class.getDeclaredField("deaths");
             campoDeaths.setAccessible(true);
 
@@ -225,7 +304,7 @@ public class BoardTest {
             metodo.invoke(board);
             int postEjec = (int) campoDeaths.get(board);
 
-            assertEquals(postEjec, preEjec + 1, "No se actualizan las muertes correctamente");
+            assertEquals(preEjec + 1, postEjec,"No se actualizan las muertes correctamente");
         } catch (Exception e) {
             System.out.println("Error al actualizar los aliens");
         }
@@ -258,7 +337,7 @@ public class BoardTest {
             System.out.println("Error al actualizar los aliens");
         }
     }
-
+*/
     //Test id: UpdateAliensCN1
     @Test
     public void normalBoundaryValueAndSpecialValueTesting_updateAliens1() {

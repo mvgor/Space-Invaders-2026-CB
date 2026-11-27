@@ -362,11 +362,14 @@ public class Board extends JPanel {
             y -= Commons.SHOT_SPEED;
 
             if (y < 0) {
-                deaths++;
+                //deaths++;
+                this.shot.die(); //DEF-8: Se ha cambiado deaths++ (muerte de aliens) a shot.die() (muerte de shot)
             } else {
                 this.shot.setY(y);
 
             }
+        }else{ //DEF-8: Se añade la lógica para inicializar un nuevo disparo cuando shot no es visible
+            this.shot = new Shot(this.player.getX(), this.player.getY());
         }
     }
 
