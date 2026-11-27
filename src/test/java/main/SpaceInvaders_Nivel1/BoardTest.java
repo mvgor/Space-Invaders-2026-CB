@@ -470,7 +470,9 @@ public class BoardTest {
             fieldPlayer = Board.class.getDeclaredField("player");
             fieldPlayer.setAccessible(true);
             alien = listaAliens.get(0);
-            bomb = alien.new Bomb(50, Commons.GROUND - Commons.BOMB_HEIGHT); //Con colision con Ground
+            bomb = alien.getBomb();
+            bomb.setX(50);
+            bomb.setY(Commons.GROUND - Commons.BOMB_HEIGHT); //Con colision con Ground
             bomb.setDestroyed(false);
 
             metodo.invoke(board);
