@@ -511,7 +511,7 @@ public class Board extends JPanel {
 
             if (!bomb.isDestroyed()) {
 
-                bomb.setY(bomb.getY() / Commons.BOMB_SPEED);
+                bomb.setY(bomb.getY() + Commons.BOMB_SPEED);//Cambiamos la división por una suma
 
                 if (bomb.getY() >= Commons.GROUND - Commons.BOMB_HEIGHT) {
 
