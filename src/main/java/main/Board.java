@@ -136,13 +136,13 @@ public class Board extends JPanel {
             for (int j = 0; j < Commons.ALIEN_COLUMNS; j++) {
 
                 var alien = new Alien(Commons.ALIEN_INIT_X + Commons.ALIEN_SEPARATOR * j,
-                        Commons.ALIEN_INIT_Y + Commons.ALIEN_SEPARATOR * i); //Se ha cambiado el - por un +
+                        Commons.ALIEN_INIT_Y + Commons.ALIEN_SEPARATOR * i); //DEF-6: Se ha cambiado el - por un +
                 this.aliens.add(alien);
             }
         }
 
         this.player = new Player();
-        this.shot = new Shot();
+        this.shot = new Shot(this.player.getX(), this.player.getY()); // DEF-6: Se ha cambiado el constructor Shot() por Shot(int x, int y)
     }
 
     /**
