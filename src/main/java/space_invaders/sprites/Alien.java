@@ -126,13 +126,21 @@ public class Alien extends Sprite {
 
             setDestroyed(true);
 
-            if (x<= Commons.BOARD_WIDTH && y<= Commons.BOARD_HEIGHT) {
+            if (x<= Commons.BOARD_WIDTH && x >= 0) { //Separamos comprobación de x e y
+                //Añadimos comprobación de que sea mayor o igual que 0
                 this.x += x;
+            } else { //Añadimos un if en caso de no estar entre los límites (dentro del else)
+                if(x > Commons.BOARD_WIDTH) { //Si x es mayor que BOARD_WIDTH (358)...
+                    this.x = Commons.BOARD_WIDTH;// x se ajusta a dicho valor
+                } else this.x = 0; //Si no es mayor a BOARD_WIDTH, entonces solo puede ser menor a 0, asi que se ajusta a 0
+            }
+
+            if (y<= Commons.BOARD_HEIGHT && y>= 0){ //Ídem a x, se comprueba que este en los límites
                 this.y += y;
-            } else
-            {
-                this.x = Commons.BOARD_WIDTH;
-                this.y = Commons.BOARD_HEIGHT;
+            } else { //Añadimos un if si y no esta en los limites
+                if(y > Commons.BOARD_HEIGHT) { //Si es mayor a BOARD_HEIGHT (350)...
+                    this.y = Commons.BOARD_HEIGHT;//y se ajusta a dicho valor
+                } else this.y = 0; //Si no, entonces solo puede ser menor que 0, asi que se ajusta a 0
             }
 
             var bombImg = "src/main/resources/images/bomb.png";
