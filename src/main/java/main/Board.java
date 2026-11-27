@@ -298,7 +298,7 @@ public class Board extends JPanel {
      */
     private void update() {
 
-        if (deaths <= Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
+        if (deaths == Commons.NUMBER_OF_ALIENS_TO_DESTROY) { // DEF-7: Cambio del signo <= a ==
 
             inGame = false;
             timer.stop();
