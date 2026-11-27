@@ -136,7 +136,7 @@ public class Board extends JPanel {
             for (int j = 0; j < Commons.ALIEN_COLUMNS; j++) {
 
                 var alien = new Alien(Commons.ALIEN_INIT_X + Commons.ALIEN_SEPARATOR * j,
-                        Commons.ALIEN_INIT_Y - Commons.ALIEN_SEPARATOR * i);
+                        Commons.ALIEN_INIT_Y + Commons.ALIEN_SEPARATOR * i); //Se ha cambiado el - por un +
                 this.aliens.add(alien);
             }
         }
